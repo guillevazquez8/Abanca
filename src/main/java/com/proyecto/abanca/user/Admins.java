@@ -1,2 +1,5 @@
-package com.proyecto.abanca;public class Admins {
+package com.proyecto.abanca.user;
+
+public class Admins extends User {
+
 }
