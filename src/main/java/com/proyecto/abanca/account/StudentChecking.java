@@ -1,8 +1,7 @@
 package com.proyecto.abanca.account;
 
-import java.time.LocalDate;
+import javax.persistence.Entity;
 
+@Entity
 public class StudentChecking extends Account {
-    private LocalDate creationDate;
-    private Status status;
 }

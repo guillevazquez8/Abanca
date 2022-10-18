@@ -1,12 +1,12 @@
 package com.proyecto.abanca.account;
 
-import org.javamoney.moneta.Money;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 
-import java.time.LocalDate;
-
+@Entity
 public class Checking extends Account {
+    @Embedded
     private Money minimumBalance;
+    @Embedded
     private Money monthlyMaintenanceFee;
-    private LocalDate creationDate;
-    private Status status;
 }

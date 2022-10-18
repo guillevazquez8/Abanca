@@ -1,14 +1,9 @@
 package com.proyecto.abanca.account;
 
-import org.javamoney.moneta.Money;
+import javax.persistence.Entity;
 
-import java.util.Optional;
-
-public class Account {
-    private Long id;
-    private Money balance;
+@Entity
+public abstract class Account extends BasicAccount {
     private String secretKey;
-    private String primaryOwner;
-    private Optional<String> secondaryOwner;
-    private Money penaltyFee;
+    private Status status;
 }

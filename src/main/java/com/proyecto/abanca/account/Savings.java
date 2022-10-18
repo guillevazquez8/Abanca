@@ -2,12 +2,13 @@ package com.proyecto.abanca.account;
 
 import org.javamoney.moneta.Money;
 
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
+@Entity
 public class Savings extends Account {
+    @Embedded
     private Money minimumBalance;
-    private LocalDate creationDate;
-    private Status status;
     private BigDecimal interestRate;
 }
