@@ -1,3 +1,3 @@
 1st commit: Structure of the model
 
-2nd commit:
+2nd commit: All attributes added
