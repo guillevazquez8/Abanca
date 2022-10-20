@@ -1,8 +1,5 @@
 package com.proyecto.abanca.account;
 
-import com.proyecto.abanca.account.BasicAccount;
-import org.javamoney.moneta.Money;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
