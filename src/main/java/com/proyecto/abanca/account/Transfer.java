@@ -11,7 +11,9 @@ public class Transfer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @ManyToOne
     private BasicAccount accountOrigen;
+    @ManyToOne
     private BasicAccount accountDestino;
     @Embedded
     private Money amount;
