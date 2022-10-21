@@ -1,4 +1,4 @@
-package com.proyecto.abanca.account;
+package com.proyecto.abanca.model.account;
 
 import org.javamoney.moneta.Money;
 

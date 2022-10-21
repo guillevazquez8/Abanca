@@ -1,5 +1,5 @@
-package com.proyecto.abanca.user;
-import com.proyecto.abanca.account.BasicAccount;
+package com.proyecto.abanca.model.user;
+import com.proyecto.abanca.model.account.BasicAccount;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;

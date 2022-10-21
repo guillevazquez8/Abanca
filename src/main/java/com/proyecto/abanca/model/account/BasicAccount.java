@@ -1,6 +1,6 @@
-package com.proyecto.abanca.account;
+package com.proyecto.abanca.model.account;
 
-import com.proyecto.abanca.user.AccountHolders;
+import com.proyecto.abanca.model.user.AccountHolders;
 
 import javax.persistence.*;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package com.proyecto.abanca.account;
+package com.proyecto.abanca.model.account;
 
 import javax.persistence.Embeddable;
 import java.math.BigDecimal;

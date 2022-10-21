@@ -1,4 +1,4 @@
-package com.proyecto.abanca.user;
+package com.proyecto.abanca.model.user;
 
 public class Address {
     private String street;
