@@ -1,5 +1,6 @@
 package com.proyecto.abanca.model.user;
 import com.proyecto.abanca.model.account.BasicAccount;
+import lombok.Getter;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -8,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
 public class AccountHolders extends User {
     private LocalDate dateOfBirth;
     private Address primaryAddress;

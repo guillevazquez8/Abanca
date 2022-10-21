@@ -22,7 +22,7 @@ public abstract class BasicAccount {
     private Money penaltyFee;
     private LocalDate creationDate;
     @OneToMany(mappedBy = "accountOrigen")
-    private Set<Transfer> transfersDone = new HashSet<>();
+    private Set<Transfer> transfersSent = new HashSet<>();
     @OneToMany(mappedBy = "accountDestino")
     private Set<Transfer> transfersReceived = new HashSet<>();
 }
