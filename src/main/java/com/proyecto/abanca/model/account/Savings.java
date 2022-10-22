@@ -1,32 +1,27 @@
 package com.proyecto.abanca.model.account;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.util.Currency;
+import javax.validation.constraints.*;
 
 import static org.aspectj.runtime.internal.Conversions.doubleValue;
 
 @Entity
 @Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Savings extends Account {
     @Embedded
+    @Min(value = 100)
     private Money minimumBalance = new Money(BigDecimal.valueOf(1000),Currency.getInstance("USD"));
+    @DecimalMax(value = "0.5")
     private BigDecimal interestRate = BigDecimal.valueOf(0.0025);
-
-    public void setInterestRate(BigDecimal interestRate) {
-        if (doubleValue(interestRate) > 0.5) {
-            //throw new EXCEPTION
-        }
-        this.interestRate = interestRate;
-    }
-
-    public void setMinimumBalance(BigDecimal minimumBalance) {
-        if (doubleValue(minimumBalance) < 100) {
-            //throw new EXCEPTION
-        }
-        this.minimumBalance = new Money(minimumBalance, Currency.getInstance("USD"));
-    }
 }
