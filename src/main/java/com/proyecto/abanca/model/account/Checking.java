@@ -20,7 +20,8 @@ public class Checking extends Account {
     private Money monthlyMaintenanceFee;
 
     public void setPrimaryOwner(AccountHolders primaryOwner) {
-        if (primaryOwner.getDateOfBirth().isBefore(LocalDate.of((LocalDate.now().getYear()-24), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()))) {
+        if (primaryOwner.getDateOfBirth().isBefore(LocalDate.of((LocalDate.now().getYear()-24),
+                LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()))) {
             //throw EXCEPTION
         }
         //Account.setPrimaryOwner() = primaryOwner;
