@@ -3,6 +3,7 @@ package com.proyecto.abanca.model.account;
 import com.proyecto.abanca.model.user.AccountHolders;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +20,7 @@ public abstract class BasicAccount {
     @ManyToOne
     private AccountHolders secondaryOwner; //optional
     @Embedded
-    private Money penaltyFee;
+    private Money penaltyFee = new Money(BigDecimal.valueOf(40));
     private LocalDate creationDate;
     @OneToMany(mappedBy = "accountOrigen")
     private Set<Transfer> transfersSent = new HashSet<>();

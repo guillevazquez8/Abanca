@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -15,9 +16,9 @@ import java.time.LocalDate;
 @Getter
 public class Checking extends Account {
     @Embedded
-    private Money minimumBalance;
+    private Money minimumBalance = new Money(BigDecimal.valueOf(250));
     @Embedded
-    private Money monthlyMaintenanceFee;
+    private Money monthlyMaintenanceFee = new Money(BigDecimal.valueOf(12));
 
     public void setPrimaryOwner(AccountHolders primaryOwner) {
         if (primaryOwner.getDateOfBirth().isBefore(LocalDate.of((LocalDate.now().getYear()-24),

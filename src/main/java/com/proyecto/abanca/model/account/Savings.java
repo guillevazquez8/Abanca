@@ -21,7 +21,7 @@ import static org.aspectj.runtime.internal.Conversions.doubleValue;
 public class Savings extends Account {
     @Embedded
     @Min(value = 100)
-    private Money minimumBalance = new Money(BigDecimal.valueOf(1000),Currency.getInstance("USD"));
+    private Money minimumBalance = new Money(BigDecimal.valueOf(1000));
     @DecimalMax(value = "0.5")
     private BigDecimal interestRate = BigDecimal.valueOf(0.0025);
 }
