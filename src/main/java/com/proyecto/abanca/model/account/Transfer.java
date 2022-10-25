@@ -1,5 +1,6 @@
 package com.proyecto.abanca.model.account;
 
+import com.proyecto.abanca.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,4 +23,6 @@ public class Transfer {
     @Embedded
     private Money amount;
     private LocalDateTime date;
+    @ManyToOne
+    private User orderedBy;
 }
