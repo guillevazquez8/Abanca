@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import java.math.BigDecimal;
-import java.util.Currency;
 import javax.validation.constraints.*;
 
 import static org.aspectj.runtime.internal.Conversions.doubleValue;
