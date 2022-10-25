@@ -1,9 +1,6 @@
 package com.proyecto.abanca.model.account;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -17,7 +14,8 @@ import static org.aspectj.runtime.internal.Conversions.doubleValue;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Savings extends Account {
+@ToString
+public class Savings extends BasicAccount {
     @Embedded
     @Min(value = 100)
     private Money minimumBalance = new Money(BigDecimal.valueOf(1000));

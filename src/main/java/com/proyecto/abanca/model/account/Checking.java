@@ -1,30 +1,27 @@
 package com.proyecto.abanca.model.account;
 
-import com.proyecto.abanca.model.user.AccountHolders;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
+@ToString
 public class Checking extends Account {
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="amount", column = @Column(name="amountMinimumBalance", insertable = false, updatable = false)),
+            @AttributeOverride(name="currency", column = @Column(name="currencyMinimumBalance", insertable = false, updatable = false)),
+    })
     private Money minimumBalance = new Money(BigDecimal.valueOf(250));
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="amount", column = @Column(name="monthlyMaintenanceFee", insertable = false, updatable = false)),
+            @AttributeOverride(name="currency", column = @Column(name="currencyMinimumBalance", insertable = false, updatable = false)),
+    })
     private Money monthlyMaintenanceFee = new Money(BigDecimal.valueOf(12));
-
-    public void setPrimaryOwner(AccountHolders primaryOwner) {
-        if (primaryOwner.getDateOfBirth().isBefore(LocalDate.of((LocalDate.now().getYear()-24),
-                LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()))) {
-            //throw EXCEPTION
-        }
-        //Account.setPrimaryOwner() = primaryOwner;
-    }
 }

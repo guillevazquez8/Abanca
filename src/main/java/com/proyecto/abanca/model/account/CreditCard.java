@@ -1,9 +1,6 @@
 package com.proyecto.abanca.model.account;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -14,10 +11,11 @@ import javax.validation.constraints.*;
 import static org.aspectj.runtime.internal.Conversions.doubleValue;
 
 @Entity
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class CreditCard extends Account {
     @Embedded
     @Max(value = 100000)

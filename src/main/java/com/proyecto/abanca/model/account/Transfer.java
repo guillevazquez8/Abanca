@@ -1,9 +1,16 @@
 package com.proyecto.abanca.model.account;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Transfer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

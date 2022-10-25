@@ -1,6 +1,6 @@
 package com.proyecto.abanca.model.user;
 import com.proyecto.abanca.model.account.BasicAccount;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,7 +11,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@Setter
+@ToString
 public class AccountHolders extends User {
     private LocalDate dateOfBirth;
     @ManyToOne
@@ -25,12 +29,11 @@ public class AccountHolders extends User {
     @OneToMany(mappedBy = "secondaryOwner")
     private Set<BasicAccount> basicAccountsSecondary = new HashSet<>();
 
-    public void setMailingAddress(Address mailingAddress) {
-        this.mailingAddress = mailingAddress;
-    }
-
-    public void setPrimaryAddress(Address primaryAddress) {
-        this.primaryAddress = primaryAddress;
+    public AccountHolders(LocalDate dateOfBirth, Address primaryAddress, Set<BasicAccount> basicAccountsPrimary, Set<BasicAccount> basicAccountsSecondary) {
+        setDateOfBirth(dateOfBirth);
+        setPrimaryAddress(primaryAddress);
+        setBasicAccountsPrimary(basicAccountsPrimary);
+        setBasicAccountsSecondary(basicAccountsSecondary);
     }
 
 }
