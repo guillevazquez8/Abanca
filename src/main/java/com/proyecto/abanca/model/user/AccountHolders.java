@@ -36,4 +36,17 @@ public class AccountHolders extends User {
         setBasicAccountsSecondary(basicAccountsSecondary);
     }
 
+    public AccountHolders(LocalDate dateOfBirth, Address primaryAddress, Address mailingAddress, Set<BasicAccount> basicAccountsPrimary) {
+        setDateOfBirth(dateOfBirth);
+        setPrimaryAddress(primaryAddress);
+        setMailingAddress(mailingAddress);
+        setBasicAccountsPrimary(basicAccountsPrimary);
+    }
+
+    public AccountHolders(LocalDate dateOfBirth, Address primaryAddress, Set<BasicAccount> basicAccountsPrimary) {
+        setDateOfBirth(dateOfBirth);
+        setPrimaryAddress(primaryAddress);
+        setBasicAccountsPrimary(basicAccountsPrimary);
+    }
+
 }

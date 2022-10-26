@@ -18,9 +18,7 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String street;
-    private Integer number; //optional
-    private Integer floor; //optional
-    private String door; //optional
+    private Integer number;
     private Long postcode;
     private String city;
     private String country;
