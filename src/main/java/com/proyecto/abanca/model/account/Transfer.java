@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 @ToString
 public class Transfer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
     @ManyToOne
     private BasicAccount accountOrigen;

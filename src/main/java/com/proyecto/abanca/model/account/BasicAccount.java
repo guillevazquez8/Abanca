@@ -19,6 +19,7 @@ import java.util.Set;
 public abstract class BasicAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
     @Embedded
     @AttributeOverrides({
