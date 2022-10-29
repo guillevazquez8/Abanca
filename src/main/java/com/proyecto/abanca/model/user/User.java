@@ -26,4 +26,8 @@ public abstract class User {
     @OneToMany(mappedBy = "orderedBy")
     private Set<Transfer> transfersOrdered = new HashSet<>();
 
+    public User(String name) {
+        setName(name);
+    }
+
 }

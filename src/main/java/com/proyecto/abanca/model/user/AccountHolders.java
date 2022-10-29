@@ -17,11 +17,11 @@ public class AccountHolders extends User {
 
     private LocalDate dateOfBirth;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "primary_address_id")
     private Address primaryAddress;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "mailing_address_id")
     private Address mailingAddress; //optional
 
@@ -45,10 +45,10 @@ public class AccountHolders extends User {
         setBasicAccountsPrimary(basicAccountsPrimary);
     }
 
-    public AccountHolders(LocalDate dateOfBirth, Address primaryAddress, Set<BasicAccount> basicAccountsPrimary) {
+    public AccountHolders(String name, LocalDate dateOfBirth, Address primaryAddress) {
+        super(name);
         setDateOfBirth(dateOfBirth);
         setPrimaryAddress(primaryAddress);
-        setBasicAccountsPrimary(basicAccountsPrimary);
     }
 
 }

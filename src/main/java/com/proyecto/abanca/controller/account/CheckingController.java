@@ -8,12 +8,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/checking")
 @RequiredArgsConstructor
 public class CheckingController {
 
     private final CheckingService checkingService;
+
+    @GetMapping
+    public List<Checking> findAllCheckings() {
+        return checkingService.findAll();
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
