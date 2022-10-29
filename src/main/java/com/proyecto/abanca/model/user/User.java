@@ -15,11 +15,15 @@ import java.util.Set;
 @ToString
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
+
     private String name;
+
     @OneToMany(mappedBy = "orderedBy")
     private Set<Transfer> transfersOrdered = new HashSet<>();
+
 }

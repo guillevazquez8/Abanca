@@ -11,5 +11,7 @@ import javax.persistence.Entity;
 @Setter
 @ToString
 public class ThirdParty extends User {
+
     private String hashedKey;
+
 }

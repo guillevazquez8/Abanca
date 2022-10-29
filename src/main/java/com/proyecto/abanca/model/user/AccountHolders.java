@@ -14,15 +14,20 @@ import java.util.Set;
 @Setter
 @ToString
 public class AccountHolders extends User {
+
     private LocalDate dateOfBirth;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "primary_address_id")
     private Address primaryAddress;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "mailing_address_id")
     private Address mailingAddress; //optional
+
     @OneToMany(mappedBy = "primaryOwner")
     private Set<BasicAccount> basicAccountsPrimary = new HashSet<>();
+
     @OneToMany(mappedBy = "secondaryOwner")
     private Set<BasicAccount> basicAccountsSecondary = new HashSet<>();
 

@@ -42,7 +42,7 @@ public class CheckingControllerTest {
     protected ObjectMapper objectMapper;
     private MockMvc mockMvc;
 
-    /*@BeforeEach
+    @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         Address juanAddress = new Address("Calle Guyana", 15, 03454L, "Cadiz", "España");
@@ -72,5 +72,5 @@ public class CheckingControllerTest {
         var checkings = checkingService.findAll();
         assertEquals(1, checkings.size());
         assertTrue(checkings.toString().contains("Juan"));
-    }*/
+    }
 }
