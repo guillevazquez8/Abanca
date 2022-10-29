@@ -1,5 +1,6 @@
 package com.proyecto.abanca.controller.account;
 
+import com.proyecto.abanca.exceptions.WrongAccountException;
 import org.springframework.web.bind.annotation.RestController;
 import com.proyecto.abanca.model.account.Checking;
 import com.proyecto.abanca.dto.CheckingDto;
@@ -24,7 +25,7 @@ public class CheckingController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Checking createChecking(@RequestBody CheckingDto checkingDto) {
+    public Checking createChecking(@RequestBody CheckingDto checkingDto) throws WrongAccountException {
         return checkingService.save(checkingDto);
     }
 

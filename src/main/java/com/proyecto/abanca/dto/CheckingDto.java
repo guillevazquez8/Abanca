@@ -6,13 +6,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CheckingDto {
 
-    private Long balance;
-    private String primaryOwnerId;
-    private String secretKey;
+    private static Long balance;
+    private static String primaryOwnerId;
+    private static String secretKey;
 
+    public static Long getBalance() {
+        return balance;
+    }
+
+    public static String getPrimaryOwnerId() {
+        return primaryOwnerId;
+    }
+
+    public static String getSecretKey() {
+        return secretKey;
+    }
 }
