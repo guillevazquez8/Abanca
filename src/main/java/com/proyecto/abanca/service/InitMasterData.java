@@ -1,12 +1,17 @@
 package com.proyecto.abanca.service;
 
+import com.proyecto.abanca.model.account.Checking;
+import com.proyecto.abanca.model.account.Money;
+import com.proyecto.abanca.model.account.Status;
 import com.proyecto.abanca.model.user.AccountHolders;
 import com.proyecto.abanca.model.user.Address;
 import com.proyecto.abanca.model.user.Admins;
 import com.proyecto.abanca.model.user.ThirdParty;
+import com.proyecto.abanca.repositories.account.CheckingRepository;
 import com.proyecto.abanca.repositories.user.*;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Service
@@ -17,17 +22,20 @@ public class InitMasterData {
     private UserRepository userRepository;
     private ThirdPartyRepository thirdPartyRepository;
     private AdminsRepository adminsRepository;
+    private CheckingRepository checkingRepository;
 
-    public InitMasterData(AccountHoldersRepository accountHoldersRepository, AddressRepository addressRepository, UserRepository userRepository, ThirdPartyRepository thirdPartyRepository, AdminsRepository adminsRepository) {
+    public InitMasterData(AccountHoldersRepository accountHoldersRepository, AddressRepository addressRepository, UserRepository userRepository, ThirdPartyRepository thirdPartyRepository, AdminsRepository adminsRepository, CheckingRepository checkingRepository) {
         this.accountHoldersRepository = accountHoldersRepository;
         this.addressRepository = addressRepository;
         this.userRepository = userRepository;
         this.thirdPartyRepository = thirdPartyRepository;
         this.adminsRepository = adminsRepository;
+        this.checkingRepository = checkingRepository;
     }
 
     public void initData() { //spring data - jpa -hibernate -jdbc - mysql
 
+        checkingRepository.deleteAll();
         accountHoldersRepository.deleteAll();
         thirdPartyRepository.deleteAll();
         adminsRepository.deleteAll();
@@ -40,7 +48,6 @@ public class InitMasterData {
         addressRepository.save(addressUser1);
         addressRepository.save(addressUser2);
         addressRepository.save(addressUser3);
-
 
         AccountHolders user1 = new AccountHolders("Maria Martinez", LocalDate.of(1891,01,01), addressUser1);
         AccountHolders user2 = new AccountHolders("Pablo Martinez", LocalDate.of(1892,02,02), addressUser2);
@@ -66,5 +73,10 @@ public class InitMasterData {
         adminsRepository.save(userA2);
         adminsRepository.save(userA3);
 
+        Checking checking1 = new Checking(new Money(BigDecimal.valueOf(10000)), user1, LocalDate.of(2015, 5, 25), "58934", Status.ACTIVE);
+        Checking checking2 = new Checking(new Money(BigDecimal.valueOf(15000)), user2, LocalDate.of(2012, 1, 12), "34721", Status.ACTIVE);
+
+        checkingRepository.save(checking1);
+        checkingRepository.save(checking2);
     }
 }

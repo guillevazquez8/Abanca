@@ -25,24 +25,15 @@ public class AccountHolders extends User {
     @JoinColumn(name = "mailing_address_id")
     private Address mailingAddress; //optional
 
-    @OneToMany(mappedBy = "primaryOwner")
-    private Set<BasicAccount> basicAccountsPrimary = new HashSet<>();
-
-    @OneToMany(mappedBy = "secondaryOwner")
-    private Set<BasicAccount> basicAccountsSecondary = new HashSet<>();
-
     public AccountHolders(LocalDate dateOfBirth, Address primaryAddress, Set<BasicAccount> basicAccountsPrimary, Set<BasicAccount> basicAccountsSecondary) {
         setDateOfBirth(dateOfBirth);
         setPrimaryAddress(primaryAddress);
-        setBasicAccountsPrimary(basicAccountsPrimary);
-        setBasicAccountsSecondary(basicAccountsSecondary);
     }
 
     public AccountHolders(LocalDate dateOfBirth, Address primaryAddress, Address mailingAddress, Set<BasicAccount> basicAccountsPrimary) {
         setDateOfBirth(dateOfBirth);
         setPrimaryAddress(primaryAddress);
         setMailingAddress(mailingAddress);
-        setBasicAccountsPrimary(basicAccountsPrimary);
     }
 
     public AccountHolders(String name, LocalDate dateOfBirth, Address primaryAddress) {

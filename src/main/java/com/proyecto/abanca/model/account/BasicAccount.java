@@ -58,4 +58,10 @@ public abstract class BasicAccount {
         setTransfersSent(transfersSent);
         setTransfersReceived(transfersReceived);
     }
+
+    public BasicAccount(Money balance, AccountHolders primaryOwner, LocalDate creationDate) {
+        this.balance = balance;
+        this.primaryOwner = primaryOwner;
+        this.creationDate = creationDate;
+    }
 }

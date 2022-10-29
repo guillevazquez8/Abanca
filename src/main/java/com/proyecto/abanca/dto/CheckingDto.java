@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CheckingDto {
+
     private Long balance;
     private String primaryOwnerId;
     private String secretKey;
