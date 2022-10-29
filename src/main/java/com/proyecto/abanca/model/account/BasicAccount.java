@@ -21,32 +21,25 @@ public abstract class BasicAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
-
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name="amount", column = @Column(name="amountBalance", insertable = false, updatable = false)),
             @AttributeOverride(name="currency", column = @Column(name="currencyBalance", insertable = false, updatable = false)),
     })
     private Money balance;
-
     @ManyToOne
     private AccountHolders primaryOwner;
-
     @ManyToOne
     private AccountHolders secondaryOwner; //optional
-
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name="amount", column = @Column(name="amountPenaltyFee", insertable = false, updatable = false)),
             @AttributeOverride(name="currency", column = @Column(name="currencyPenaltyFee", insertable = false, updatable = false)),
     })
     private Money penaltyFee = new Money(BigDecimal.valueOf(40));
-
     private LocalDate creationDate;
-
     @OneToMany(mappedBy = "accountOrigen")
     private Set<Transfer> transfersSent = new HashSet<>();
-
     @OneToMany(mappedBy = "accountDestino")
     private Set<Transfer> transfersReceived = new HashSet<>();
 

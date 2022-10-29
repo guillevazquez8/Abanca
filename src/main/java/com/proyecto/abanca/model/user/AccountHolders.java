@@ -2,7 +2,10 @@ package com.proyecto.abanca.model.user;
 import com.proyecto.abanca.model.account.BasicAccount;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,10 +18,10 @@ import java.util.Set;
 @ToString
 public class AccountHolders extends User {
     private LocalDate dateOfBirth;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "primary_address_id")
     private Address primaryAddress;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "mailing_address_id")
     private Address mailingAddress; //optional
     @OneToMany(mappedBy = "primaryOwner")

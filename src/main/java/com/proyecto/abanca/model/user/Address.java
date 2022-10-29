@@ -20,12 +20,4 @@ public class Address {
     private Long postcode;
     private String city;
     private String country;
-
-    public Address(String street, Integer number, Long postcode, String city, String country) {
-        setStreet(street);
-        setNumber(number);
-        setPostcode(postcode);
-        setCity(city);
-        setCountry(country);
-    }
 }

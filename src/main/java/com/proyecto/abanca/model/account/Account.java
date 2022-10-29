@@ -14,9 +14,6 @@ import javax.persistence.InheritanceType;
 @ToString
 @Inheritance(strategy= InheritanceType.JOINED)
 public abstract class Account extends BasicAccount {
-
     private String secretKey;
-
     private Status status;
-
 }
