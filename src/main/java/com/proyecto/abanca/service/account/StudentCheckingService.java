@@ -24,8 +24,6 @@ public class StudentCheckingService {
     private final StudentCheckingRepository studentCheckingRepository;
     private final AccountHoldersService accountHoldersService;
 
-    private final CheckingService checkingService;
-
     public List<StudentChecking> findAll() {return studentCheckingRepository.findAll();}
 
     public StudentChecking save(CheckingDto checkingDto) throws WrongAccountException {
@@ -34,7 +32,6 @@ public class StudentCheckingService {
             throw new BadRequestException("The entered account doesn't have a Primary Owner");
         }
         if (primaryOwner.get().getDateOfBirth().isBefore(LocalDate.of(LocalDate.now().getYear() - 24, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()))) {
-            checkingService.save(checkingDto);
             throw new WrongAccountException("You're too old to have a Student Checking account! We'll create a Checking account instead");
         }
         StudentChecking studentChecking = new StudentChecking();

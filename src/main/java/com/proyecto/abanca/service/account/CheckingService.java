@@ -27,7 +27,6 @@ public class CheckingService {
     private final AccountHoldersService accountHoldersService;
 
     private final StudentCheckingService studentCheckingService;
-
     public List<Checking> findAll() {
         return checkingRepository.findAll();
     }

@@ -49,7 +49,7 @@ public class InitMasterData {
         addressRepository.save(addressUser2);
         addressRepository.save(addressUser3);
 
-        AccountHolders user1 = new AccountHolders("Maria Martinez", LocalDate.of(1891,01,01), addressUser1);
+        AccountHolders user1 = new AccountHolders("Maria Martinez", LocalDate.of(2000,01,01), addressUser1);
         AccountHolders user2 = new AccountHolders("Pablo Martinez", LocalDate.of(1892,02,02), addressUser2);
         AccountHolders user3 = new AccountHolders("Lola Perez", LocalDate.of(1893,03,03), addressUser3);
 
