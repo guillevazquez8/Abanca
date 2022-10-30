@@ -9,6 +9,9 @@ import com.proyecto.abanca.model.user.Admins;
 import com.proyecto.abanca.model.user.ThirdParty;
 import com.proyecto.abanca.repositories.account.CheckingRepository;
 import com.proyecto.abanca.repositories.user.*;
+import com.proyecto.abanca.security.models.ERole;
+import com.proyecto.abanca.security.models.Role;
+import com.proyecto.abanca.security.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -49,25 +52,25 @@ public class InitMasterData {
         addressRepository.save(addressUser2);
         addressRepository.save(addressUser3);
 
-        AccountHolders user1 = new AccountHolders("Maria Martinez", LocalDate.of(2000,01,01), addressUser1);
-        AccountHolders user2 = new AccountHolders("Pablo Martinez", LocalDate.of(1892,02,02), addressUser2);
-        AccountHolders user3 = new AccountHolders("Lola Perez", LocalDate.of(1893,03,03), addressUser3);
+        AccountHolders user1 = new AccountHolders("Maria Martinez", "maria", "soymaria", LocalDate.of(2000,01,01), addressUser1);
+        AccountHolders user2 = new AccountHolders("Pablo Martinez", "pablo", "soypablo", LocalDate.of(1892,02,02), addressUser2);
+        AccountHolders user3 = new AccountHolders("Lola Perez", "lola", "soylola", LocalDate.of(1893,03,03), addressUser3);
 
         accountHoldersRepository.save(user1);
         accountHoldersRepository.save(user2);
         accountHoldersRepository.save(user3);
 
-        ThirdParty userTP1 = new ThirdParty("Tadeo Jones", "1234");
-        ThirdParty userTP2 = new ThirdParty("Tamara Rodriguez", "1234");
-        ThirdParty userTP3 = new ThirdParty("Toledo Park", "1234");
+        ThirdParty userTP1 = new ThirdParty("Tadeo Jones", "tadeo", "soytadeo", "1234");
+        ThirdParty userTP2 = new ThirdParty("Tamara Rodriguez", "tamara", "soytamara", "1234");
+        ThirdParty userTP3 = new ThirdParty("Toledo Park", "toledo", "soytledo", "1234");
 
         thirdPartyRepository.save(userTP1);
         thirdPartyRepository.save(userTP2);
         thirdPartyRepository.save(userTP3);
 
-        Admins userA1 = new Admins("Andrea Ardon");
-        Admins userA2 = new Admins("Alejandro Carmona");
-        Admins userA3 = new Admins("Adrian Castillo");
+        Admins userA1 = new Admins("Andrea Ardon", "andrea", "soyandrea");
+        Admins userA2 = new Admins("Alejandro Carmona", "alejandro", "soyalejandro");
+        Admins userA3 = new Admins("Adrian Castillo", "adrian", "soyadrian");
 
         adminsRepository.save(userA1);
         adminsRepository.save(userA2);

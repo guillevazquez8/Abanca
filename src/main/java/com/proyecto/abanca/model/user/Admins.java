@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 @ToString
 public class Admins extends User {
 
-    public Admins(String name) {
-        super(name);
+    public Admins(String name, String username, String password) {
+        super(name, username, password);
     }
 
 }

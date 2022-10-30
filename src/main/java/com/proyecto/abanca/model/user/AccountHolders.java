@@ -36,8 +36,8 @@ public class AccountHolders extends User {
         setMailingAddress(mailingAddress);
     }
 
-    public AccountHolders(String name, LocalDate dateOfBirth, Address primaryAddress) {
-        super(name);
+    public AccountHolders(String name, String username, String password, LocalDate dateOfBirth, Address primaryAddress) {
+        super(name, username, password);
         setDateOfBirth(dateOfBirth);
         setPrimaryAddress(primaryAddress);
     }
