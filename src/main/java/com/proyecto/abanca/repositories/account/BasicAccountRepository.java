@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface BasicAccountRepository extends JpaRepository<BasicAccount, Long> {
+
     @Query("select b from BasicAccount b where b.primaryOwner.id = ?1")
     List<BasicAccount> findByPrimaryOwner_Id(Long id);
 

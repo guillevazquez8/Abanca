@@ -31,6 +31,8 @@ public class CheckingService {
         return checkingRepository.findAll();
     }
 
+    public Checking findById(Long id) {return checkingRepository.findById(id).get();}
+
     public Checking save(CheckingDto checkingDto) throws WrongAccountException {
         Optional<AccountHolders> primaryOwner = accountHoldersService.findById(Long.valueOf(checkingDto.getPrimaryOwnerId()));
         if (primaryOwner.isEmpty()) {

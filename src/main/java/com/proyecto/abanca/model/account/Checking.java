@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -29,7 +28,12 @@ public class Checking extends Account {
     })
     private Money monthlyMaintenanceFee = new Money(BigDecimal.valueOf(12));
 
-    public Checking(Money balance, AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status) {
-        super(balance, primaryOwner, creationDate, secretKey, status);
+    public Checking(AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status) {
+        super(primaryOwner, creationDate, secretKey, status);
     }
+
+    public Checking(AccountHolders primaryOwner, LocalDate creationDate, String secretKey) {
+        super(primaryOwner, creationDate, secretKey);
+    }
+
 }

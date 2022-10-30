@@ -30,7 +30,7 @@ public class CreditCardService {
     public CreditCard save(CreditCardDto creditCardDto) {
         Optional<AccountHolders> primaryOwner = accountHoldersService.findById(Long.valueOf(creditCardDto.getPrimaryOwnerId()));
         if (primaryOwner.isEmpty()) {
-            throw new BadRequestException("La cuenta introducida no tiene Primary Owner");
+            throw new BadRequestException("Entered account doesn't have a Primary Owner");
         }
         CreditCard creditCard = new CreditCard();
         creditCard.setBalance(new Money(BigDecimal.valueOf(creditCardDto.getBalance())));

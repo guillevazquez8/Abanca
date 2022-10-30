@@ -76,8 +76,8 @@ public class InitMasterData {
         adminsRepository.save(userA2);
         adminsRepository.save(userA3);
 
-        Checking checking1 = new Checking(new Money(BigDecimal.valueOf(10000)), user1, LocalDate.of(2015, 5, 25), "58934", Status.ACTIVE);
-        Checking checking2 = new Checking(new Money(BigDecimal.valueOf(15000)), user2, LocalDate.of(2012, 1, 12), "34721", Status.ACTIVE);
+        Checking checking1 = new Checking(user1, LocalDate.of(2015, 5, 25), "58934", Status.ACTIVE);
+        Checking checking2 = new Checking(user2, LocalDate.of(2012, 1, 12), "34721", Status.ACTIVE);
 
         checkingRepository.save(checking1);
         checkingRepository.save(checking2);

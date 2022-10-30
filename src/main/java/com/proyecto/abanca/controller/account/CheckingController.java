@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,14 +21,17 @@ public class CheckingController {
     private final CheckingService checkingService;
 
     @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ACCOUNTHOLDER') or hasRole('THIRDPARTY') or hasRole('ADMIN')")
     public List<Checking> findAllCheckings() {
         return checkingService.findAll();
     }
 
+    @GetMapping
+    public Checking findById(Long id) {return checkingService.findById(id);}
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ACCOUNTHOLDER') or hasRole('THIRDPARTY') or hasRole('ADMIN')")
     public Checking createChecking(@RequestBody CheckingDto checkingDto) throws WrongAccountException {
         return checkingService.save(checkingDto);
     }

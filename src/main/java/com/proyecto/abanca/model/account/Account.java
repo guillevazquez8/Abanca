@@ -21,9 +21,14 @@ public abstract class Account extends BasicAccount {
 
     private Status status;
 
-    public Account(Money balance, AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status) {
-        super(balance, primaryOwner, creationDate);
+    public Account(AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status) {
+        super(primaryOwner, creationDate);
         this.secretKey = secretKey;
         this.status = status;
+    }
+
+    public Account(AccountHolders primaryOwner, LocalDate creationDate, String secretKey) {
+        super(primaryOwner, creationDate);
+        this.secretKey = secretKey;
     }
 }

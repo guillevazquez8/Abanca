@@ -1,6 +1,7 @@
 package com.proyecto.abanca.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
 
 @Setter
@@ -10,8 +11,7 @@ public class CheckingDto {
     private static String primaryOwnerId;
     private static String secretKey;
 
-    public CheckingDto(Long balance, String primaryOwnerId, String secretKey) {
-        this.balance = balance;
+    public CheckingDto(String primaryOwnerId, String secretKey) {
         this.primaryOwnerId = primaryOwnerId;
         this.secretKey = secretKey;
     }
@@ -27,4 +27,5 @@ public class CheckingDto {
     public static String getSecretKey() {
         return secretKey;
     }
+
 }

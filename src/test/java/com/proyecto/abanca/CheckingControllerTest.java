@@ -70,7 +70,7 @@ public class CheckingControllerTest {
     void testCreateChecking() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                     .post("/checking")
-                    .content(objectMapper.writeValueAsString(new CheckingDto(2000L, "1", "9847")))
+                    .content(objectMapper.writeValueAsString(new CheckingDto("1", "9847")))
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())

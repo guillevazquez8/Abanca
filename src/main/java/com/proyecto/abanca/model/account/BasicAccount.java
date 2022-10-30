@@ -4,6 +4,7 @@ import com.proyecto.abanca.model.user.AccountHolders;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ import java.util.Set;
 @ToString
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class BasicAccount {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -30,6 +32,7 @@ public abstract class BasicAccount {
     private Money balance;
 
     @ManyToOne
+    @NotNull
     private AccountHolders primaryOwner;
 
     @ManyToOne
@@ -50,17 +53,7 @@ public abstract class BasicAccount {
     @OneToMany(mappedBy = "accountDestino")
     private Set<Transfer> transfersReceived = new HashSet<>();
 
-    public BasicAccount(Money balance, AccountHolders primaryOwner, Money penaltyFee, LocalDate creationDate, Set<Transfer> transfersSent, Set<Transfer> transfersReceived) {
-        setBalance(balance);
-        setPrimaryOwner(primaryOwner);
-        setPenaltyFee(penaltyFee);
-        setCreationDate(creationDate);
-        setTransfersSent(transfersSent);
-        setTransfersReceived(transfersReceived);
-    }
-
-    public BasicAccount(Money balance, AccountHolders primaryOwner, LocalDate creationDate) {
-        this.balance = balance;
+    public BasicAccount(AccountHolders primaryOwner, LocalDate creationDate) {
         this.primaryOwner = primaryOwner;
         this.creationDate = creationDate;
     }
