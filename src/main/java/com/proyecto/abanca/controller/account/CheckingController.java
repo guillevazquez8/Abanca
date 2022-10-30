@@ -21,17 +21,18 @@ public class CheckingController {
     private final CheckingService checkingService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ACCOUNTHOLDER') or hasRole('THIRDPARTY') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Checking> findAllCheckings() {
         return checkingService.findAll();
     }
 
-    @GetMapping
-    public Checking findById(Long id) {return checkingService.findById(id);}
+    @GetMapping("/findById/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ACCOUNTHOLDER')")
+    public Checking findById(@PathVariable Long id) {return checkingService.findById(id);}
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ACCOUNTHOLDER') or hasRole('THIRDPARTY') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ACCOUNTHOLDER') or hasRole('ADMIN')")
     public Checking createChecking(@RequestBody CheckingDto checkingDto) throws WrongAccountException {
         return checkingService.save(checkingDto);
     }

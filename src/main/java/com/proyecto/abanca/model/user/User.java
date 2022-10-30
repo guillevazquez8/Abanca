@@ -40,6 +40,13 @@ public class User {
     @OneToMany(mappedBy = "orderedBy")
     private Set<Transfer> transfersOrdered = new HashSet<>();
 
+    public User(String name, String username, String password, Set<Role> roles) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+
     public User(String name, String username, String password) {
         this.name = name;
         this.username = username;

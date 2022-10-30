@@ -1,5 +1,6 @@
 package com.proyecto.abanca.model.user;
 import com.proyecto.abanca.model.account.BasicAccount;
+import com.proyecto.abanca.security.models.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,21 +26,23 @@ public class AccountHolders extends User {
     @JoinColumn(name = "mailing_address_id")
     private Address mailingAddress; //optional
 
-    public AccountHolders(LocalDate dateOfBirth, Address primaryAddress, Set<BasicAccount> basicAccountsPrimary, Set<BasicAccount> basicAccountsSecondary) {
+    public AccountHolders(String name, String username, String password, Set<Role> roles, LocalDate dateOfBirth, Address primaryAddress) {
+        super(name, username, password, roles);
         setDateOfBirth(dateOfBirth);
         setPrimaryAddress(primaryAddress);
-    }
-
-    public AccountHolders(LocalDate dateOfBirth, Address primaryAddress, Address mailingAddress, Set<BasicAccount> basicAccountsPrimary) {
-        setDateOfBirth(dateOfBirth);
-        setPrimaryAddress(primaryAddress);
-        setMailingAddress(mailingAddress);
     }
 
     public AccountHolders(String name, String username, String password, LocalDate dateOfBirth, Address primaryAddress) {
         super(name, username, password);
         setDateOfBirth(dateOfBirth);
         setPrimaryAddress(primaryAddress);
+    }
+
+    public AccountHolders(String name, String username, String password, Set<Role> roles, LocalDate dateOfBirth, Address primaryAddress, Address mailingAddress) {
+        super(name, username, password, roles);
+        setDateOfBirth(dateOfBirth);
+        setPrimaryAddress(primaryAddress);
+        setMailingAddress(mailingAddress);
     }
 
 }

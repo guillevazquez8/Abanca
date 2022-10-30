@@ -19,12 +19,12 @@ public class StudentCheckingController {
     private final StudentCheckingService studentCheckingService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ACCOUNTHOLDER') or hasRole('THIRDPARTY') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<StudentChecking> findAll() {return studentCheckingService.findAll();}
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ACCOUNTHOLDER') or hasRole('THIRDPARTY') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ACCOUNTHOLDER') or hasRole('ADMIN')")
     public StudentChecking createStudentChecking(@RequestBody CheckingDto checkingDto) throws WrongAccountException {
         return studentCheckingService.save(checkingDto);
     }

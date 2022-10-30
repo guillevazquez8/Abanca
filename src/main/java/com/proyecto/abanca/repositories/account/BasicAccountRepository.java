@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface BasicAccountRepository extends JpaRepository<BasicAccount, Long> {
 
-    @Query("select b from BasicAccount b where b.primaryOwner.id = ?1")
-    List<BasicAccount> findByPrimaryOwner_Id(Long id);
+    @Query("select b from BasicAccount b where b.primaryOwner.username = ?1 and b.primaryOwner.password = ?2")
+    List<BasicAccount> findByPrimaryOwner_UsernameAndPrimaryOwner_Password(String username, String password);
+
 
 
 }

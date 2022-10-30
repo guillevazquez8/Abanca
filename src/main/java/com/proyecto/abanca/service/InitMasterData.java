@@ -9,13 +9,12 @@ import com.proyecto.abanca.model.user.Admins;
 import com.proyecto.abanca.model.user.ThirdParty;
 import com.proyecto.abanca.repositories.account.CheckingRepository;
 import com.proyecto.abanca.repositories.user.*;
-import com.proyecto.abanca.security.models.ERole;
-import com.proyecto.abanca.security.models.Role;
-import com.proyecto.abanca.security.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+
 
 @Service
 public class InitMasterData {
