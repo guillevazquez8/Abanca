@@ -28,8 +28,7 @@ public class BasicAccountService {
     }
 
     public Money accessMyAccountBalance(Long accountId, String username, String password) {
-        BasicAccount myAccount = accessMyAccount(accountId, username, password);
-        return myAccount.getBalance();
+        return accessMyAccount(accountId, username, password).getBalance();
     }
 
     public Money accessAnyAccountBalance(Long accountId) {
