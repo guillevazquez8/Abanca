@@ -1,13 +1,9 @@
 package com.proyecto.abanca.service.account;
 
-import com.proyecto.abanca.dto.CheckingDto;
 import com.proyecto.abanca.dto.SavingsDto;
 import com.proyecto.abanca.exceptions.BadRequestException;
-import com.proyecto.abanca.exceptions.WrongAccountException;
-import com.proyecto.abanca.model.account.Checking;
 import com.proyecto.abanca.model.account.Money;
 import com.proyecto.abanca.model.account.Savings;
-import com.proyecto.abanca.model.account.Status;
 import com.proyecto.abanca.model.user.AccountHolders;
 import com.proyecto.abanca.repositories.account.SavingsRepository;
 import com.proyecto.abanca.service.user.AccountHoldersService;
@@ -29,6 +25,8 @@ public class SavingsService {
     public List<Savings> findAll() {return savingsRepository.findAll();}
 
     public Savings findById(Long id) {return savingsRepository.findById(id).get();}
+
+    public Optional<Savings> findByIdOptional(Long id) {return savingsRepository.findById(id);}
 
     public Savings save(SavingsDto savingsDto) {
         Optional<AccountHolders> primaryOwner = accountHoldersService.findById(Long.valueOf(savingsDto.getPrimaryOwnerId()));

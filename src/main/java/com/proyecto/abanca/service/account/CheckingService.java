@@ -6,7 +6,6 @@ import com.proyecto.abanca.model.account.Checking;
 import com.proyecto.abanca.model.account.Money;
 import com.proyecto.abanca.model.account.Status;
 import com.proyecto.abanca.dto.CheckingDto;
-import com.proyecto.abanca.model.account.StudentChecking;
 import com.proyecto.abanca.model.user.AccountHolders;
 import com.proyecto.abanca.repositories.account.CheckingRepository;
 import com.proyecto.abanca.service.user.AccountHoldersService;
@@ -31,12 +30,21 @@ public class CheckingService {
         return checkingRepository.findAll();
     }
 
-    public Checking findById(Long id) {return checkingRepository.findById(id).get();}
+    public Optional<Checking> findByIdOptional(Long id) {
+        return checkingRepository.findById(id);
+    }
+
+    public Checking findById(Long id) {
+        if (checkingRepository.findById(id).isEmpty()) {
+            throw new BadRequestException("The introduced account doesn't exist");
+        }
+        return checkingRepository.findById(id).get();
+    }
 
     public Checking save(CheckingDto checkingDto) throws WrongAccountException {
         Optional<AccountHolders> primaryOwner = accountHoldersService.findById(Long.valueOf(checkingDto.getPrimaryOwnerId()));
         if (primaryOwner.isEmpty()) {
-            throw new BadRequestException("La cuenta introducida no tiene Primary Owner");
+            throw new BadRequestException("The introduced accoun't doesn't have a Primary Owner");
         }
         if (primaryOwner.get().getDateOfBirth().isAfter(LocalDate.of(LocalDate.now().getYear() - 24, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()))) {
             studentCheckingService.save(checkingDto);
@@ -51,4 +59,6 @@ public class CheckingService {
 
         return checkingRepository.save(checking);
     }
+
+
 }
