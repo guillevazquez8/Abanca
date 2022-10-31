@@ -9,17 +9,13 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransferDto {
+public class TransferThirdPartyDto {
 
     private Long amount;
+    private String hashedKey;
     private String accountOrigenId;
+    private String accountOrigenSecretKey;
     private String accountDestinoId;
-    private String accountDestinoName;
-
-    public TransferDto(Long amount, String accountOrigenId, String accountDestinoId) {
-        this.amount = amount;
-        this.accountOrigenId = accountOrigenId;
-        this.accountDestinoId = accountDestinoId;
-    }
+    private String accountDestinoSecretKey;
 
 }

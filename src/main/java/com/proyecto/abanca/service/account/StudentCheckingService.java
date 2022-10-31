@@ -27,16 +27,13 @@ public class StudentCheckingService {
     public List<StudentChecking> findAll() {return studentCheckingRepository.findAll();}
 
     public StudentChecking save(CheckingDto checkingDto) throws WrongAccountException {
-        Optional<AccountHolders> primaryOwner = accountHoldersService.findById(Long.valueOf(CheckingDto.getPrimaryOwnerId()));
-        if (primaryOwner.isEmpty()) {
-            throw new BadRequestException("The entered account doesn't have a Primary Owner");
-        }
-        if (primaryOwner.get().getDateOfBirth().isBefore(LocalDate.of(LocalDate.now().getYear() - 24, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()))) {
-            throw new WrongAccountException("You're too old to have a Student Checking account! We'll create a Checking account instead");
+        AccountHolders primaryOwner = accountHoldersService.findById(Long.valueOf(CheckingDto.getPrimaryOwnerId()));
+        if (primaryOwner.getDateOfBirth().isBefore(LocalDate.of(LocalDate.now().getYear() - 24, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()))) {
+            throw new WrongAccountException("You're too old to have a Student Checking account! You should create a Checking account instead");
         }
         StudentChecking studentChecking = new StudentChecking();
         studentChecking.setBalance(new Money(BigDecimal.valueOf(CheckingDto.getBalance())));
-        studentChecking.setPrimaryOwner(primaryOwner.get());
+        studentChecking.setPrimaryOwner(primaryOwner);
         studentChecking.setCreationDate(LocalDate.now());
         studentChecking.setSecretKey(CheckingDto.getSecretKey());
         studentChecking.setStatus(Status.ACTIVE);

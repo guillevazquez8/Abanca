@@ -42,17 +42,14 @@ public class CheckingService {
     }
 
     public Checking save(CheckingDto checkingDto) throws WrongAccountException {
-        Optional<AccountHolders> primaryOwner = accountHoldersService.findById(Long.valueOf(checkingDto.getPrimaryOwnerId()));
-        if (primaryOwner.isEmpty()) {
-            throw new BadRequestException("The introduced accoun't doesn't have a Primary Owner");
-        }
-        if (primaryOwner.get().getDateOfBirth().isAfter(LocalDate.of(LocalDate.now().getYear() - 24, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()))) {
+        AccountHolders primaryOwner = accountHoldersService.findById(Long.valueOf(checkingDto.getPrimaryOwnerId()));
+        if (primaryOwner.getDateOfBirth().isAfter(LocalDate.of(LocalDate.now().getYear() - 24, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()))) {
             studentCheckingService.save(checkingDto);
             throw new WrongAccountException("You're too young to have a Checking account! We'll create a Student Checking account instead");
         }
         Checking checking = new Checking();
         checking.setBalance(new Money(BigDecimal.valueOf(checkingDto.getBalance())));
-        checking.setPrimaryOwner(primaryOwner.get());
+        checking.setPrimaryOwner(primaryOwner);
         checking.setCreationDate(LocalDate.now());
         checking.setSecretKey(checkingDto.getSecretKey());
         checking.setStatus(Status.ACTIVE);

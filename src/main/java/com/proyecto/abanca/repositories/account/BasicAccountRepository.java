@@ -10,4 +10,5 @@ public interface BasicAccountRepository extends JpaRepository<BasicAccount, Long
             select b from BasicAccount b
             where b.id = ?1 and b.primaryOwner.username = ?2 and b.primaryOwner.password = ?3""")
     BasicAccount findByIdAndPrimaryOwner_UsernameAndPrimaryOwner_Password(Long id, String username, String password);
+
 }

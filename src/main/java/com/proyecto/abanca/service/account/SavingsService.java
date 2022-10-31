@@ -29,13 +29,11 @@ public class SavingsService {
     public Optional<Savings> findByIdOptional(Long id) {return savingsRepository.findById(id);}
 
     public Savings save(SavingsDto savingsDto) {
-        Optional<AccountHolders> primaryOwner = accountHoldersService.findById(Long.valueOf(savingsDto.getPrimaryOwnerId()));
-        if (primaryOwner.isEmpty()) {
-            throw new BadRequestException("La cuenta introducida no tiene Primary Owner");
-        }
+        AccountHolders primaryOwner = accountHoldersService.findById(Long.valueOf(savingsDto.getPrimaryOwnerId()));
+
         Savings savings = new Savings();
         savings.setBalance(new Money(BigDecimal.valueOf(savingsDto.getBalance())));
-        savings.setPrimaryOwner(primaryOwner.get());
+        savings.setPrimaryOwner(primaryOwner);
         savings.setCreationDate(LocalDate.now());
         savings.setMinimumBalance(new Money(BigDecimal.valueOf(savingsDto.getMinimumBalance())));
         savings.setInterestRate(BigDecimal.valueOf(savingsDto.getInterestRate()));

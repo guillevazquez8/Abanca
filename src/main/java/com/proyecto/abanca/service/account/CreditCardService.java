@@ -28,13 +28,11 @@ public class CreditCardService {
     public List<CreditCard> findAll() {return creditCardRepository.findAll();}
 
     public CreditCard save(CreditCardDto creditCardDto) {
-        Optional<AccountHolders> primaryOwner = accountHoldersService.findById(Long.valueOf(creditCardDto.getPrimaryOwnerId()));
-        if (primaryOwner.isEmpty()) {
-            throw new BadRequestException("Entered account doesn't have a Primary Owner");
-        }
+        AccountHolders primaryOwner = accountHoldersService.findById(Long.valueOf(creditCardDto.getPrimaryOwnerId()));
+
         CreditCard creditCard = new CreditCard();
         creditCard.setBalance(new Money(BigDecimal.valueOf(creditCardDto.getBalance())));
-        creditCard.setPrimaryOwner(primaryOwner.get());
+        creditCard.setPrimaryOwner(primaryOwner);
         creditCard.setCreationDate(LocalDate.now());
         creditCard.setSecretKey(creditCardDto.getSecretKey());
         creditCard.setStatus(Status.ACTIVE);

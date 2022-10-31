@@ -1,6 +1,7 @@
 package com.proyecto.abanca.controller.account;
 
 import com.proyecto.abanca.dto.TransferDto;
+import com.proyecto.abanca.dto.TransferThirdPartyDto;
 import com.proyecto.abanca.exceptions.NoFundsException;
 import com.proyecto.abanca.model.account.Transfer;
 import com.proyecto.abanca.service.account.TransferService;
@@ -21,6 +22,13 @@ public class TransferController {
     @PreAuthorize("hasRole('ACCOUNTHOLDER')")
     public Transfer transfer(@RequestBody TransferDto transferDto) throws NoFundsException {
         return transferService.transfer(transferDto);
+    }
+
+    @PostMapping("/third_party")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('THIRDPARTY')")
+    public Transfer transferThirdParty(@RequestBody TransferThirdPartyDto transferThirdPartyDto) throws NoFundsException {
+        return transferService.transferThirdParty(transferThirdPartyDto);
     }
 
 }
