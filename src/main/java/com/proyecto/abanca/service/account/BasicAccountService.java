@@ -3,15 +3,13 @@ package com.proyecto.abanca.service.account;
 import com.proyecto.abanca.exceptions.BadRequestException;
 import com.proyecto.abanca.exceptions.NoFundsException;
 import com.proyecto.abanca.exceptions.UnauthorizedException;
-import com.proyecto.abanca.model.account.BasicAccount;
-import com.proyecto.abanca.model.account.Checking;
-import com.proyecto.abanca.model.account.Money;
-import com.proyecto.abanca.model.account.Savings;
+import com.proyecto.abanca.model.account.*;
 import com.proyecto.abanca.repositories.account.BasicAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -19,9 +17,8 @@ import java.util.Optional;
 public class BasicAccountService {
 
     private final BasicAccountRepository basicAccountRepository;
-
     private final SavingsService savingsService;
-
+    private final CreditCardService creditCardService;
     private final CheckingService checkingService;
 
     public BasicAccount findById(Long id) {
@@ -38,10 +35,12 @@ public class BasicAccountService {
     }
 
     public Money accessMyAccountBalance(Long accountId, String username, String password) {
+        applyInterestRate(accountId);
         return accessMyAccount(accountId, username, password).getBalance();
     }
 
     public Money accessAnyAccountBalance(Long accountId) {
+        applyInterestRate(accountId);
         return accountExists(accountId).getBalance();
     }
 
@@ -53,17 +52,17 @@ public class BasicAccountService {
 
     public void deductAmountTransfer(Long amount, Long accountId) throws NoFundsException {
         BasicAccount accountOrigen = accountExists(accountId);
-        if ((accountOrigen.getBalance().getAmount().longValue() - amount) < 0) {
+        if (accountOrigen.getBalance().getAmount().subtract(BigDecimal.valueOf(amount)).compareTo(BigDecimal.ZERO) < 0) {
             throw new NoFundsException("The account doesn't have enough funds to process this transfer");
         }
-        Money newBalance = new Money(BigDecimal.valueOf(accountOrigen.getBalance().getAmount().longValue() - amount));
+        Money newBalance = new Money(accountOrigen.getBalance().getAmount().subtract(BigDecimal.valueOf(amount)));
         accountOrigen.setBalance(newBalance);
         penaltyFee(amount, accountId);
     }
 
     public void depositAmountTransfer(Long amount, Long accountId) {
         BasicAccount accountOrigen = accountExists(accountId);
-        Money newBalance = new Money(BigDecimal.valueOf(accountOrigen.getBalance().getAmount().longValue() + amount));
+        Money newBalance = new Money(accountOrigen.getBalance().getAmount().add(BigDecimal.valueOf(amount)));
         accountOrigen.setBalance(newBalance);
     }
 
@@ -72,7 +71,7 @@ public class BasicAccountService {
             Checking checking = checkingService.findByIdOptional(accountId).get();
 
             if (checking.getBalance().getAmount().longValue() < checking.getMinimumBalance().getAmount().longValue()) {
-                checking.setBalance(new Money(BigDecimal.valueOf(checking.getBalance().getAmount().longValue() - checking.getPenaltyFee().getAmount().longValue())));
+                checking.setBalance(new Money(checking.getBalance().getAmount().subtract(checking.getPenaltyFee().getAmount())));
             }
         }
 
@@ -80,7 +79,33 @@ public class BasicAccountService {
             Savings savings = savingsService.findByIdOptional(accountId).get();
 
             if (savings.getBalance().getAmount().longValue() < savings.getMinimumBalance().getAmount().longValue()) {
-                savings.setBalance(new Money(BigDecimal.valueOf(savings.getBalance().getAmount().longValue() - savings.getPenaltyFee().getAmount().longValue())));
+                savings.setBalance(new Money(savings.getBalance().getAmount().subtract(savings.getPenaltyFee().getAmount())));
+            }
+        }
+    }
+
+    public void applyInterestRate(Long id) {
+        if (savingsService.findByIdOptional(id).isPresent()) {
+            Savings savings = savingsService.findById(id);
+            if (savings.getInterestRateApplied().equals(null)) {
+                if (LocalDate.now().isAfter(LocalDate.of(savings.getCreationDate().getYear() + 1, savings.getCreationDate().getMonth(), savings.getCreationDate().getDayOfMonth()))) {
+                    savings.setBalance(new Money(savings.getBalance().getAmount().add(savings.getBalance().getAmount().multiply(savings.getInterestRate()))));
+                    savings.setInterestRateApplied(LocalDate.now());
+                }
+            }else if (LocalDate.now().isAfter(LocalDate.of(savings.getInterestRateApplied().getYear() + 1, savings.getInterestRateApplied().getMonth(), savings.getInterestRateApplied().getDayOfMonth()))) {
+                    savings.setBalance(new Money(savings.getBalance().getAmount().add(savings.getBalance().getAmount().multiply(savings.getInterestRate()))));
+                    savings.setInterestRateApplied(LocalDate.now());
+            }
+        }else if (creditCardService.findByIdOptional(id).isPresent()) {
+            CreditCard creditCard = creditCardService.findById(id);
+            if (creditCard.getInterestRateApplied().equals(null)) {
+                if (LocalDate.now().isAfter(LocalDate.of(creditCard.getCreationDate().getYear(), creditCard.getCreationDate().getMonth().plus(1), creditCard.getCreationDate().getDayOfMonth()))) {
+                    creditCard.setBalance(new Money(creditCard.getBalance().getAmount().add(creditCard.getBalance().getAmount().multiply(creditCard.getInterestRate().divide(BigDecimal.valueOf(12))))));
+                    creditCard.setInterestRateApplied(LocalDate.now());
+                } else if (LocalDate.now().isAfter(LocalDate.of(creditCard.getInterestRateApplied().getYear(), creditCard.getInterestRateApplied().getMonth().plus(1), creditCard.getInterestRateApplied().getDayOfMonth()))) {
+                    creditCard.setBalance(new Money(creditCard.getBalance().getAmount().add(creditCard.getBalance().getAmount().multiply(creditCard.getInterestRate().divide(BigDecimal.valueOf(12))))));
+                    creditCard.setInterestRateApplied(LocalDate.now());
+                }
             }
         }
     }

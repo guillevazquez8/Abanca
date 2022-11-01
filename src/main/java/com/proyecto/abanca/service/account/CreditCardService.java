@@ -2,10 +2,7 @@ package com.proyecto.abanca.service.account;
 
 import com.proyecto.abanca.dto.CreditCardDto;
 import com.proyecto.abanca.exceptions.BadRequestException;
-import com.proyecto.abanca.model.account.Checking;
-import com.proyecto.abanca.model.account.CreditCard;
-import com.proyecto.abanca.model.account.Money;
-import com.proyecto.abanca.model.account.Status;
+import com.proyecto.abanca.model.account.*;
 import com.proyecto.abanca.model.user.AccountHolders;
 import com.proyecto.abanca.repositories.account.CreditCardRepository;
 import com.proyecto.abanca.service.user.AccountHoldersService;
@@ -26,6 +23,10 @@ public class CreditCardService {
     private final AccountHoldersService accountHoldersService;
 
     public List<CreditCard> findAll() {return creditCardRepository.findAll();}
+
+    public CreditCard findById(Long id) {return creditCardRepository.findById(id).get();}
+
+    public Optional<CreditCard> findByIdOptional(Long id) {return creditCardRepository.findById(id);}
 
     public CreditCard save(CreditCardDto creditCardDto) {
         AccountHolders primaryOwner = accountHoldersService.findById(Long.valueOf(creditCardDto.getPrimaryOwnerId()));

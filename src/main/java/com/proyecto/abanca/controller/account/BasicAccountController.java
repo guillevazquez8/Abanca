@@ -39,7 +39,7 @@ public class BasicAccountController {
     }
 
     @PatchMapping("/any_account/{id}/{balance}")
-    @PreAuthorize("hasRole('AMIND')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Money updateAnyBalance(@PathVariable Long id,
                                   @PathVariable Long balance) {
         return basicAccountService.modifyAnyAccountBalance(id, balance);

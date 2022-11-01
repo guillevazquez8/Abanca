@@ -28,6 +28,7 @@ public class SavingsService {
 
     public Optional<Savings> findByIdOptional(Long id) {return savingsRepository.findById(id);}
 
+
     public Savings save(SavingsDto savingsDto) {
         AccountHolders primaryOwner = accountHoldersService.findById(Long.valueOf(savingsDto.getPrimaryOwnerId()));
 
@@ -39,6 +40,24 @@ public class SavingsService {
         savings.setInterestRate(BigDecimal.valueOf(savingsDto.getInterestRate()));
 
         return savingsRepository.save(savings);
+    }
+
+    public void applyInterestRate(Long id) {
+        Optional<Savings> savingsOptional = savingsRepository.findById(id);
+        if (savingsOptional.isEmpty()) {
+            throw new BadRequestException("The introduced savings account ID doesn't belong to any account");
+        }
+        Savings savings = savingsOptional.get();
+
+        if (savings.getInterestRateApplied().equals(null)) {
+            if (LocalDate.now().isAfter(LocalDate.of(savings.getCreationDate().getYear() + 1, savings.getCreationDate().getMonth(), savings.getCreationDate().getDayOfMonth()))) {
+                savings.setBalance(new Money(savings.getBalance().getAmount().add(savings.getBalance().getAmount().multiply(savings.getInterestRate()))));
+                savings.setInterestRateApplied(LocalDate.now());
+            }
+        } else if (LocalDate.now().isAfter(LocalDate.of(savings.getInterestRateApplied().getYear() + 1, savings.getInterestRateApplied().getMonth(), savings.getInterestRateApplied().getDayOfMonth()))) {
+            savings.setBalance(new Money(savings.getBalance().getAmount().add(savings.getBalance().getAmount().multiply(savings.getInterestRate()))));
+            savings.setInterestRateApplied(LocalDate.now());
+        }
     }
 
 }
