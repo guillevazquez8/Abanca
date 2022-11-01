@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/savings")
+@RequestMapping("/abanca/savings")
 @RequiredArgsConstructor
 public class SavingsController {
 
@@ -23,7 +23,7 @@ public class SavingsController {
     @PreAuthorize("hasRole('ADMIN')")
     public List<Savings> findAllSavings() {return savingsService.findAll();}
 
-    @GetMapping("findById/{id}")
+    @GetMapping("/findById/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('ACCOUNTHOLDER')")
     public Savings findById(@PathVariable Long id) {return savingsService.findById(id);}
 

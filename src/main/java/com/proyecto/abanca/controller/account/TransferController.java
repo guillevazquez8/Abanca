@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/transfer")
+@RequestMapping("/abanca/transfer")
 public class TransferController {
 
     private final TransferService transferService;
@@ -24,7 +24,7 @@ public class TransferController {
         return transferService.transfer(transferDto);
     }
 
-    @PostMapping("/third_party")
+    @PostMapping("/third-party")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('THIRDPARTY')")
     public Transfer transferThirdParty(@RequestBody TransferThirdPartyDto transferThirdPartyDto) throws NoFundsException {

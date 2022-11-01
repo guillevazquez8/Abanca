@@ -1,11 +1,8 @@
 package com.proyecto.abanca.model.user;
-import com.proyecto.abanca.model.account.BasicAccount;
-import com.proyecto.abanca.security.models.Role;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity

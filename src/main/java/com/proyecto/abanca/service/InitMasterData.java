@@ -1,7 +1,6 @@
 package com.proyecto.abanca.service;
 
 import com.proyecto.abanca.model.account.Checking;
-import com.proyecto.abanca.model.account.Money;
 import com.proyecto.abanca.model.account.Status;
 import com.proyecto.abanca.model.user.AccountHolders;
 import com.proyecto.abanca.model.user.Address;
@@ -11,25 +10,20 @@ import com.proyecto.abanca.repositories.account.CheckingRepository;
 import com.proyecto.abanca.repositories.user.*;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-
-
 
 @Service
 public class InitMasterData {
 
     private AccountHoldersRepository accountHoldersRepository;
     private AddressRepository addressRepository;
-    private UserRepository userRepository;
     private ThirdPartyRepository thirdPartyRepository;
     private AdminsRepository adminsRepository;
     private CheckingRepository checkingRepository;
 
-    public InitMasterData(AccountHoldersRepository accountHoldersRepository, AddressRepository addressRepository, UserRepository userRepository, ThirdPartyRepository thirdPartyRepository, AdminsRepository adminsRepository, CheckingRepository checkingRepository) {
+    public InitMasterData(AccountHoldersRepository accountHoldersRepository, AddressRepository addressRepository, ThirdPartyRepository thirdPartyRepository, AdminsRepository adminsRepository, CheckingRepository checkingRepository) {
         this.accountHoldersRepository = accountHoldersRepository;
         this.addressRepository = addressRepository;
-        this.userRepository = userRepository;
         this.thirdPartyRepository = thirdPartyRepository;
         this.adminsRepository = adminsRepository;
         this.checkingRepository = checkingRepository;

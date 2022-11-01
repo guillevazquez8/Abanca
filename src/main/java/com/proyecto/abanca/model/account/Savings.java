@@ -8,8 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 
-import static org.aspectj.runtime.internal.Conversions.doubleValue;
-
 @Entity
 @Getter
 @Setter
@@ -25,6 +23,6 @@ public class Savings extends BasicAccount {
     @DecimalMax(value = "0.5")
     private BigDecimal interestRate = BigDecimal.valueOf(0.0025);
 
-    private LocalDate interestRateApplied;
+    private LocalDate interestRateDateApplied;
 
 }

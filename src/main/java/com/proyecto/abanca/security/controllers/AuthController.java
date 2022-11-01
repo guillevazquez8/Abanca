@@ -2,10 +2,10 @@ package com.proyecto.abanca.security.controllers;
 
 import com.proyecto.abanca.model.user.User;
 import com.proyecto.abanca.repositories.user.UserRepository;
-import com.proyecto.abanca.security.models.Role;
-import com.proyecto.abanca.security.repository.RoleRepository;
+import com.proyecto.abanca.model.user.Role;
+import com.proyecto.abanca.repositories.user.RoleRepository;
 import com.proyecto.abanca.security.security.jwt.JwtUtils;
-import com.proyecto.abanca.security.models.ERole;
+import com.proyecto.abanca.model.user.ERole;
 import com.proyecto.abanca.security.payload.request.LoginRequest;
 import com.proyecto.abanca.security.payload.request.SignupRequest;
 import com.proyecto.abanca.security.payload.response.JwtResponse;
@@ -23,13 +23,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/abanca/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthenticationManager authenticationManager;
@@ -77,26 +76,26 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role accountHolderRole = roleRepository.findByName(ERole.ROLE_ACCOUNTHOLDER)
+            Role accountHolderRole = roleRepository.findByName(ERole.ACCOUNTHOLDER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(accountHolderRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                        Role adminRole = roleRepository.findByName(ERole.ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
-                    case "third party":
-                        Role thirdPartyRole = roleRepository.findByName(ERole.ROLE_THIRDPARTY)
+                    case "thirdparty":
+                        Role thirdPartyRole = roleRepository.findByName(ERole.THIRDPARTY)
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(thirdPartyRole);
 
                         break;
                     default:
-                        Role accountHolderRole = roleRepository.findByName(ERole.ROLE_ACCOUNTHOLDER)
+                        Role accountHolderRole = roleRepository.findByName(ERole.ACCOUNTHOLDER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(accountHolderRole);
                 }

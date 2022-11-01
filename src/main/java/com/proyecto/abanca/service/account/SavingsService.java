@@ -49,14 +49,14 @@ public class SavingsService {
         }
         Savings savings = savingsOptional.get();
 
-        if (savings.getInterestRateApplied().equals(null)) {
+        if (savings.getInterestRateDateApplied().equals(null)) {
             if (LocalDate.now().isAfter(LocalDate.of(savings.getCreationDate().getYear() + 1, savings.getCreationDate().getMonth(), savings.getCreationDate().getDayOfMonth()))) {
                 savings.setBalance(new Money(savings.getBalance().getAmount().add(savings.getBalance().getAmount().multiply(savings.getInterestRate()))));
-                savings.setInterestRateApplied(LocalDate.now());
+                savings.setInterestRateDateApplied(LocalDate.now());
             }
-        } else if (LocalDate.now().isAfter(LocalDate.of(savings.getInterestRateApplied().getYear() + 1, savings.getInterestRateApplied().getMonth(), savings.getInterestRateApplied().getDayOfMonth()))) {
+        } else if (LocalDate.now().isAfter(LocalDate.of(savings.getInterestRateDateApplied().getYear() + 1, savings.getInterestRateDateApplied().getMonth(), savings.getInterestRateDateApplied().getDayOfMonth()))) {
             savings.setBalance(new Money(savings.getBalance().getAmount().add(savings.getBalance().getAmount().multiply(savings.getInterestRate()))));
-            savings.setInterestRateApplied(LocalDate.now());
+            savings.setInterestRateDateApplied(LocalDate.now());
         }
     }
 

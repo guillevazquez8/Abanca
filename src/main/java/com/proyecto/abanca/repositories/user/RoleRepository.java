@@ -1,7 +1,7 @@
-package com.proyecto.abanca.security.repository;
+package com.proyecto.abanca.repositories.user;
 
-import com.proyecto.abanca.security.models.ERole;
-import com.proyecto.abanca.security.models.Role;
+import com.proyecto.abanca.model.user.ERole;
+import com.proyecto.abanca.model.user.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

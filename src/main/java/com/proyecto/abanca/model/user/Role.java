@@ -1,4 +1,4 @@
-package com.proyecto.abanca.security.models;
+package com.proyecto.abanca.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

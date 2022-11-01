@@ -1,6 +1,5 @@
 package com.proyecto.abanca.model.user;
 
-import com.proyecto.abanca.security.models.Role;
 import lombok.*;
 
 import javax.persistence.Entity;

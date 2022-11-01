@@ -29,7 +29,7 @@ public abstract class BasicAccount {
             @AttributeOverride(name="amount", column = @Column(name="amountBalance", insertable = false, updatable = false)),
             @AttributeOverride(name="currency", column = @Column(name="currencyBalance", insertable = false, updatable = false)),
     })
-    private Money balance;
+    private Money balance = new Money(BigDecimal.valueOf(0));
 
     @ManyToOne
     @NotNull

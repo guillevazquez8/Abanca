@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/creditCard")
+@RequestMapping("/abanca/creditcard")
 @RequiredArgsConstructor
 public class CreditCardController {
 
@@ -28,7 +28,5 @@ public class CreditCardController {
     public CreditCard createCreditCard(@RequestBody @Valid CreditCardDto creditCardDto) {
         return creditCardService.save(creditCardDto);
     }
-
-
 
 }

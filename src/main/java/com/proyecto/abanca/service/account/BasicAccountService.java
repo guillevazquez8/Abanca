@@ -1,5 +1,6 @@
 package com.proyecto.abanca.service.account;
 
+import com.proyecto.abanca.dto.AccountHolderDto;
 import com.proyecto.abanca.exceptions.BadRequestException;
 import com.proyecto.abanca.exceptions.NoFundsException;
 import com.proyecto.abanca.exceptions.UnauthorizedException;
@@ -25,18 +26,15 @@ public class BasicAccountService {
         return accountExists(id);
     }
 
-    public BasicAccount accessMyAccount(Long accountId, String username, String password) {
-        BasicAccount myAccount = accountExists(accountId);
-        usernameCorrespondsId(accountId, username);
-        if (myAccount.getPrimaryOwner().getPassword() != password) {
-            throw new UnauthorizedException("The password introduced is not correct.");
-        }
-        return basicAccountRepository.findByIdAndPrimaryOwner_UsernameAndPrimaryOwner_Password(accountId, username, password);
+    public BasicAccount accessMyAccount(Long accountId, AccountHolderDto accountHolderDto) {
+        usernameAndPasswordCorrespondsAccount(accountId, accountHolderDto);
+        return basicAccountRepository.findByIdAndPrimaryOwner_UsernameAndPrimaryOwner_Password(accountId, accountHolderDto.getUsername(), accountHolderDto.getPassword());
     }
 
-    public Money accessMyAccountBalance(Long accountId, String username, String password) {
-        applyInterestRate(accountId);
-        return accessMyAccount(accountId, username, password).getBalance();
+    public Money accessMyAccountBalance(Long accountId, AccountHolderDto accountHolderDto) {
+        BasicAccount account = accessMyAccount(accountId, accountHolderDto);
+        applyInterestRate(account.getId());
+        return account.getBalance();
     }
 
     public Money accessAnyAccountBalance(Long accountId) {
@@ -84,44 +82,45 @@ public class BasicAccountService {
         }
     }
 
-    public void applyInterestRate(Long id) {
-        if (savingsService.findByIdOptional(id).isPresent()) {
-            Savings savings = savingsService.findById(id);
-            if (savings.getInterestRateApplied().equals(null)) {
+    public void applyInterestRate(Long accountId) {
+        if (savingsService.findByIdOptional(accountId).isPresent()) {
+            Savings savings = savingsService.findById(accountId);
+            if (savings.getInterestRateDateApplied().equals(null)) {
                 if (LocalDate.now().isAfter(LocalDate.of(savings.getCreationDate().getYear() + 1, savings.getCreationDate().getMonth(), savings.getCreationDate().getDayOfMonth()))) {
                     savings.setBalance(new Money(savings.getBalance().getAmount().add(savings.getBalance().getAmount().multiply(savings.getInterestRate()))));
-                    savings.setInterestRateApplied(LocalDate.now());
+                    savings.setInterestRateDateApplied(LocalDate.now());
                 }
-            }else if (LocalDate.now().isAfter(LocalDate.of(savings.getInterestRateApplied().getYear() + 1, savings.getInterestRateApplied().getMonth(), savings.getInterestRateApplied().getDayOfMonth()))) {
+            }else if (LocalDate.now().isAfter(LocalDate.of(savings.getInterestRateDateApplied().getYear() + 1, savings.getInterestRateDateApplied().getMonth(), savings.getInterestRateDateApplied().getDayOfMonth()))) {
                     savings.setBalance(new Money(savings.getBalance().getAmount().add(savings.getBalance().getAmount().multiply(savings.getInterestRate()))));
-                    savings.setInterestRateApplied(LocalDate.now());
+                    savings.setInterestRateDateApplied(LocalDate.now());
             }
-        }else if (creditCardService.findByIdOptional(id).isPresent()) {
-            CreditCard creditCard = creditCardService.findById(id);
-            if (creditCard.getInterestRateApplied().equals(null)) {
+        }else if (creditCardService.findByIdOptional(accountId).isPresent()) {
+            CreditCard creditCard = creditCardService.findById(accountId);
+            if (creditCard.getInterestRateDateApplied().equals(null)) {
                 if (LocalDate.now().isAfter(LocalDate.of(creditCard.getCreationDate().getYear(), creditCard.getCreationDate().getMonth().plus(1), creditCard.getCreationDate().getDayOfMonth()))) {
                     creditCard.setBalance(new Money(creditCard.getBalance().getAmount().add(creditCard.getBalance().getAmount().multiply(creditCard.getInterestRate().divide(BigDecimal.valueOf(12))))));
-                    creditCard.setInterestRateApplied(LocalDate.now());
-                } else if (LocalDate.now().isAfter(LocalDate.of(creditCard.getInterestRateApplied().getYear(), creditCard.getInterestRateApplied().getMonth().plus(1), creditCard.getInterestRateApplied().getDayOfMonth()))) {
+                    creditCard.setInterestRateDateApplied(LocalDate.now());
+                } else if (LocalDate.now().isAfter(LocalDate.of(creditCard.getInterestRateDateApplied().getYear(), creditCard.getInterestRateDateApplied().getMonth().plus(1), creditCard.getInterestRateDateApplied().getDayOfMonth()))) {
                     creditCard.setBalance(new Money(creditCard.getBalance().getAmount().add(creditCard.getBalance().getAmount().multiply(creditCard.getInterestRate().divide(BigDecimal.valueOf(12))))));
-                    creditCard.setInterestRateApplied(LocalDate.now());
+                    creditCard.setInterestRateDateApplied(LocalDate.now());
                 }
             }
         }
     }
 
-    public BasicAccount accountExists(Long id) {
-        Optional<BasicAccount> accountOptional = basicAccountRepository.findById(id);
+    public BasicAccount accountExists(Long accountId) {
+        Optional<BasicAccount> accountOptional = basicAccountRepository.findById(accountId);
         if (accountOptional.isEmpty()) {
             throw new BadRequestException("The account introduced doesn't exist");
         }
         return accountOptional.get();
     }
 
-    public void usernameCorrespondsId(Long accountId, String username) {
+    public void usernameAndPasswordCorrespondsAccount(Long accountId, AccountHolderDto accountHolderDto) {
         BasicAccount myAccount = accountExists(accountId);
-        if (!myAccount.getPrimaryOwner().getUsername().equalsIgnoreCase(username)) {
-            throw new UnauthorizedException("Account ID " + accountId + " and username " + username + " don't fit.");
+        if (!myAccount.getPrimaryOwner().getUsername().equalsIgnoreCase(accountHolderDto.getUsername())
+                || !myAccount.getPrimaryOwner().getPassword().equalsIgnoreCase(accountHolderDto.getPassword())) {
+            throw new UnauthorizedException("Account ID " + accountId + " and entered credentials don't fit.");
         }
     }
 

@@ -7,10 +7,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Currency;
 import javax.validation.constraints.*;
-
-import static org.aspectj.runtime.internal.Conversions.doubleValue;
 
 @Entity
 @AllArgsConstructor
@@ -27,7 +24,7 @@ public class CreditCard extends Account {
     @DecimalMin(value = "0.1")
     private BigDecimal interestRate = BigDecimal.valueOf(0.2);
 
-    private LocalDate interestRateApplied;
+    private LocalDate interestRateDateApplied;
 
     public CreditCard(AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status, Money creditLimit, BigDecimal interestRate) {
         super(primaryOwner, creationDate, secretKey, status);
