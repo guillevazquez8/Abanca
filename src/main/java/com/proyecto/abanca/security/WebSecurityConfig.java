@@ -61,6 +61,7 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/abanca/auth/signup").permitAll()
                 .antMatchers("/abanca/auth/signin").permitAll()
+                .antMatchers("/abanca/initData").permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());

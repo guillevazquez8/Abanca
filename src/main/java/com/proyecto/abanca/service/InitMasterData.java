@@ -1,78 +1,125 @@
 package com.proyecto.abanca.service;
 
-import com.proyecto.abanca.model.account.Checking;
-import com.proyecto.abanca.model.account.Status;
-import com.proyecto.abanca.model.user.AccountHolders;
-import com.proyecto.abanca.model.user.Address;
-import com.proyecto.abanca.model.user.Admins;
-import com.proyecto.abanca.model.user.ThirdParty;
+import com.proyecto.abanca.model.account.*;
+import com.proyecto.abanca.model.user.*;
 import com.proyecto.abanca.repositories.account.CheckingRepository;
+import com.proyecto.abanca.repositories.account.CreditCardRepository;
+import com.proyecto.abanca.repositories.account.SavingsRepository;
+import com.proyecto.abanca.repositories.account.StudentCheckingRepository;
 import com.proyecto.abanca.repositories.user.*;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class InitMasterData {
 
+    private RoleRepository roleRepository;
     private AccountHoldersRepository accountHoldersRepository;
     private AddressRepository addressRepository;
     private ThirdPartyRepository thirdPartyRepository;
     private AdminsRepository adminsRepository;
     private CheckingRepository checkingRepository;
+    private StudentCheckingRepository studentCheckingRepository;
+    private SavingsRepository savingsRepository;
+    private CreditCardRepository creditCardRepository;
 
-    public InitMasterData(AccountHoldersRepository accountHoldersRepository, AddressRepository addressRepository, ThirdPartyRepository thirdPartyRepository, AdminsRepository adminsRepository, CheckingRepository checkingRepository) {
+    public InitMasterData(AccountHoldersRepository accountHoldersRepository, RoleRepository roleRepository,
+                          AddressRepository addressRepository, ThirdPartyRepository thirdPartyRepository,
+                          AdminsRepository adminsRepository, CheckingRepository checkingRepository,
+                          StudentCheckingRepository studentCheckingRepository, SavingsRepository savingsRepository,
+                          CreditCardRepository creditCardRepository) {
         this.accountHoldersRepository = accountHoldersRepository;
+        this.roleRepository = roleRepository;
         this.addressRepository = addressRepository;
         this.thirdPartyRepository = thirdPartyRepository;
         this.adminsRepository = adminsRepository;
         this.checkingRepository = checkingRepository;
+        this.studentCheckingRepository = studentCheckingRepository;
+        this.savingsRepository = savingsRepository;
+        this.creditCardRepository = creditCardRepository;
     }
 
-    public void initData() { //spring data - jpa -hibernate -jdbc - mysql
+    public void initData() {
 
+        studentCheckingRepository.deleteAll();
+        savingsRepository.deleteAll();
+        creditCardRepository.deleteAll();
         checkingRepository.deleteAll();
         accountHoldersRepository.deleteAll();
         thirdPartyRepository.deleteAll();
         adminsRepository.deleteAll();
+        roleRepository.deleteAll();
         addressRepository.deleteAll();
 
-        Address addressUser1 = new Address("Plaza España", 2, 01234L, "Madrid", "Spain");
-        Address addressUser2 = new Address("Plaza España", 2, 01234L, "Madrid", "Spain");
-        Address addressUser3 = new Address("Calle Andalucia", 7, 13678L, "Valencia", "France");
+        Address address1 = new Address("Rua Canido", 76, 36390L, "Vigo", "España");
+        Address address2 = new Address("Taquigraf Garriga", 95, 18029L, "Barcelona", "España");
+        Address address3 = new Address("Rua Iago Aspas", 10, 38465L, "Moaña", "España");
+        addressRepository.save(address1);
+        addressRepository.save(address2);
+        addressRepository.save(address3);
 
-        addressRepository.save(addressUser1);
-        addressRepository.save(addressUser2);
-        addressRepository.save(addressUser3);
+        Role accountHolder = new Role(ERole.ROLE_ACCOUNTHOLDER);
+        Role thirdParty = new Role(ERole.ROLE_THIRDPARTY);
+        Role admin = new Role(ERole.ROLE_ADMIN);
+        roleRepository.save(accountHolder);
+        roleRepository.save(thirdParty);
+        roleRepository.save(admin);
+        Set<Role> roles = new HashSet<>();
 
-        AccountHolders user1 = new AccountHolders("Maria Martinez", "maria", "soymaria", LocalDate.of(2000,01,01), addressUser1);
-        AccountHolders user2 = new AccountHolders("Pablo Martinez", "pablo", "soypablo", LocalDate.of(1892,02,02), addressUser2);
-        AccountHolders user3 = new AccountHolders("Lola Perez", "lola", "soylola", LocalDate.of(1893,03,03), addressUser3);
+        roles.add(accountHolder);
+        AccountHolders accHolder1 = new AccountHolders("Valeri Karpin", "valeri", "soyvaleri", roles, LocalDate.of(1985,9,28), address1);
+        AccountHolders accHolder2 = new AccountHolders("Gustavo Lopez", "gustavo", "soygustavo", roles, LocalDate.of(1982,2,12), address2);
+        AccountHolders accHolder3 = new AccountHolders("Benni McCarthy", "benni", "soybenni", roles, LocalDate.of(1993,03,03), address3);
+        AccountHolders accHolder4 = new AccountHolders("Michel Salgado", "michel", "soymichel", roles, LocalDate.of(1999, 11, 6), address3);
+        AccountHolders accHolder5 = new AccountHolders("Mazinho Alcantara", "mazinho", "soymazinho", roles, LocalDate.of(2001, 3, 3), address1);
+        accountHoldersRepository.save(accHolder1);
+        accountHoldersRepository.save(accHolder2);
+        accountHoldersRepository.save(accHolder3);
+        accountHoldersRepository.save(accHolder4);
+        accountHoldersRepository.save(accHolder5);
+        roles.clear();
 
-        accountHoldersRepository.save(user1);
-        accountHoldersRepository.save(user2);
-        accountHoldersRepository.save(user3);
+        roles.add(thirdParty);
+        ThirdParty thirdParty1 = new ThirdParty("Leo Messi", "leo", "soyleo", roles, "1234");
+        ThirdParty thirdParty2 = new ThirdParty("Andres Iniesta", "andres", "soyandres", roles, "1234");
+        ThirdParty thirdParty3 = new ThirdParty("Samuel Etoo", "samuel", "soysamuel", roles, "1234");
+        thirdPartyRepository.save(thirdParty1);
+        thirdPartyRepository.save(thirdParty2);
+        thirdPartyRepository.save(thirdParty3);
+        roles.clear();
 
-        ThirdParty userTP1 = new ThirdParty("Tadeo Jones", "tadeo", "soytadeo", "1234");
-        ThirdParty userTP2 = new ThirdParty("Tamara Rodriguez", "tamara", "soytamara", "1234");
-        ThirdParty userTP3 = new ThirdParty("Toledo Park", "toledo", "soytledo", "1234");
+        roles.add(admin);
+        Admins admin1 = new Admins("Paolo Maldini", "paolo", "soypaolo", roles);
+        Admins admin2 = new Admins("Andrei Shevchenko", "andrei", "soyandrei", roles);
+        Admins admin3 = new Admins("Andrea Pirlo", "andrea", "soyandrea", roles);
+        adminsRepository.save(admin1);
+        adminsRepository.save(admin2);
+        adminsRepository.save(admin3);
+        roles.clear();
 
-        thirdPartyRepository.save(userTP1);
-        thirdPartyRepository.save(userTP2);
-        thirdPartyRepository.save(userTP3);
-
-        Admins userA1 = new Admins("Andrea Ardon", "andrea", "soyandrea");
-        Admins userA2 = new Admins("Alejandro Carmona", "alejandro", "soyalejandro");
-        Admins userA3 = new Admins("Adrian Castillo", "adrian", "soyadrian");
-
-        adminsRepository.save(userA1);
-        adminsRepository.save(userA2);
-        adminsRepository.save(userA3);
-
-        Checking checking1 = new Checking(user1, LocalDate.of(2015, 5, 25), "58934", Status.ACTIVE);
-        Checking checking2 = new Checking(user2, LocalDate.of(2012, 1, 12), "34721", Status.ACTIVE);
-
+        Checking checking1 = new Checking(accHolder1, LocalDate.of(2015, 5, 25), "1234", Status.ACTIVE);
+        Checking checking2 = new Checking(accHolder2, LocalDate.of(2012, 1, 12), "1234", Status.ACTIVE);
         checkingRepository.save(checking1);
         checkingRepository.save(checking2);
+
+        StudentChecking studentChecking1 = new StudentChecking(accHolder4, LocalDate.of(2021, 1,2), "1234", Status.ACTIVE);
+        StudentChecking studentChecking2 = new StudentChecking(accHolder5, LocalDate.of(2022, 8, 19), "1234", Status.FROZEN);
+        studentCheckingRepository.save(studentChecking1);
+        studentCheckingRepository.save(studentChecking2);
+
+        Savings savings1 = new Savings(accHolder3, LocalDate.of(2010, 1, 1), new Money(BigDecimal.valueOf(1000)), BigDecimal.valueOf(0.2));
+        Savings savings2 = new Savings(accHolder2, LocalDate.of(2012, 1, 6), new Money(BigDecimal.valueOf(10000)), BigDecimal.valueOf(0.5));
+        savingsRepository.save(savings1);
+        savingsRepository.save(savings2);
+
+        CreditCard creditCard1 = new CreditCard(accHolder1, LocalDate.of(2015, 3, 15), "1234", Status.ACTIVE, new Money(BigDecimal.valueOf(10000)), BigDecimal.valueOf(0.7));
+        CreditCard creditCard2 = new CreditCard(accHolder5, LocalDate.of(2012, 6, 6), "1234", Status.FROZEN, new Money(BigDecimal.valueOf(50000)), BigDecimal.valueOf(0.1));
+        creditCardRepository.save(creditCard1);
+        creditCardRepository.save(creditCard2);
+
     }
 }

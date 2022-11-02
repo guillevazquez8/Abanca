@@ -19,14 +19,14 @@ public class Checking extends Account {
             @AttributeOverride(name="amount", column = @Column(name="amountMinimumBalance", insertable = false, updatable = false)),
             @AttributeOverride(name="currency", column = @Column(name="currencyMinimumBalance", insertable = false, updatable = false)),
     })
-    private Money minimumBalance = new Money(BigDecimal.valueOf(250));
+    private Money minimumBalance;
 
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name="amount", column = @Column(name="monthlyMaintenanceFee", insertable = false, updatable = false)),
-            @AttributeOverride(name="currency", column = @Column(name="currencyMinimumBalance", insertable = false, updatable = false)),
+            @AttributeOverride(name="currency", column = @Column(name="currencyMaintenanceFee", insertable = false, updatable = false)),
     })
-    private Money monthlyMaintenanceFee = new Money(BigDecimal.valueOf(12));
+    private Money monthlyMaintenanceFee;
 
     public Checking(AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status) {
         super(primaryOwner, creationDate, secretKey, status);
@@ -34,6 +34,8 @@ public class Checking extends Account {
 
     public Checking(AccountHolders primaryOwner, LocalDate creationDate, String secretKey) {
         super(primaryOwner, creationDate, secretKey);
+        this.minimumBalance = new Money(BigDecimal.valueOf(250));
+        this.monthlyMaintenanceFee = new Money(BigDecimal.valueOf(12));
     }
 
 }

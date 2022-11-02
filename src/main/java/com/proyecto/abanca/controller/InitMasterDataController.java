@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/initMasterData")
+@RequestMapping("/abanca/initData")
 @RequiredArgsConstructor
 public class InitMasterDataController {
 
     private final InitMasterData initMasterData;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public void initData() {
         this.initMasterData.initData();
     }

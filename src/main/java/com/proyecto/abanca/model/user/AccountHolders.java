@@ -29,12 +29,6 @@ public class AccountHolders extends User {
         setPrimaryAddress(primaryAddress);
     }
 
-    public AccountHolders(String name, String username, String password, LocalDate dateOfBirth, Address primaryAddress) {
-        super(name, username, password);
-        setDateOfBirth(dateOfBirth);
-        setPrimaryAddress(primaryAddress);
-    }
-
     public AccountHolders(String name, String username, String password, Set<Role> roles, LocalDate dateOfBirth, Address primaryAddress, Address mailingAddress) {
         super(name, username, password, roles);
         setDateOfBirth(dateOfBirth);

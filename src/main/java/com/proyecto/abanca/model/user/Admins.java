@@ -16,10 +16,4 @@ public class Admins extends User {
         super(name, username, password, roles);
     }
 
-    public Admins(String name, String username, String password) {
-        super(name, username, password);
-    }
-
-
-
 }

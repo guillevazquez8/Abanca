@@ -29,7 +29,7 @@ public abstract class BasicAccount {
             @AttributeOverride(name="amount", column = @Column(name="amountBalance", insertable = false, updatable = false)),
             @AttributeOverride(name="currency", column = @Column(name="currencyBalance", insertable = false, updatable = false)),
     })
-    private Money balance = new Money(BigDecimal.valueOf(0));
+    private Money balance;
 
     @ManyToOne
     @NotNull
@@ -43,7 +43,7 @@ public abstract class BasicAccount {
             @AttributeOverride(name="amount", column = @Column(name="amountPenaltyFee", insertable = false, updatable = false)),
             @AttributeOverride(name="currency", column = @Column(name="currencyPenaltyFee", insertable = false, updatable = false)),
     })
-    private Money penaltyFee = new Money(BigDecimal.valueOf(40));
+    private final Money penaltyFee = new Money(BigDecimal.valueOf(40));
 
     private LocalDate creationDate;
 

@@ -13,12 +13,10 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 @ToString
 public class CreditCard extends Account {
 
     @Embedded
-    @Max(value = 100000)
     private Money creditLimit = new Money(BigDecimal.valueOf(100));
 
     @DecimalMin(value = "0.1")
@@ -26,10 +24,28 @@ public class CreditCard extends Account {
 
     private LocalDate interestRateDateApplied;
 
-    public CreditCard(AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status, Money creditLimit, BigDecimal interestRate) {
+    public CreditCard(AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status,
+                      Money creditLimit, BigDecimal interestRate) {
         super(primaryOwner, creationDate, secretKey, status);
+        setCreditLimit(creditLimit);
+        setInterestRate(interestRate);
+    }
+
+    public void setCreditLimit(Money creditLimit) {
+        if (creditLimit.getAmount().compareTo(BigDecimal.valueOf(100000)) > 0) {
+            throw new RuntimeException("Credit limit should be less than 100_000");
+        }
         this.creditLimit = creditLimit;
+    }
+
+    public void setInterestRate(BigDecimal interestRate) {
+        if (interestRate.compareTo(BigDecimal.valueOf(0.1)) < 0) {
+            throw new RuntimeException("Interest rate should be more than 0.1");
+        }
         this.interestRate = interestRate;
     }
 
+    public void setInterestRateDateApplied(LocalDate interestRateDateApplied) {
+        this.interestRateDateApplied = interestRateDateApplied;
+    }
 }

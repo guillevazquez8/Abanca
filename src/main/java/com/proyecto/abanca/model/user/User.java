@@ -46,27 +46,10 @@ public class User {
         this.roles = roles;
     }
 
-    public User(String name, String username, String password) {
-        this.name = name;
-        this.username = username;
-        this.password = password;
-    }
-
-    public User(String username, String password, Set<Role> roles) {
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-    }
-
     public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
-
-    public User(String name) {
-        this.name = name;
-    }
-
     public String getUsername() {
         return this.username;
     }
