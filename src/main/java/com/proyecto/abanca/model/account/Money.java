@@ -1,6 +1,7 @@
 package com.proyecto.abanca.model.account;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Currency;

@@ -17,10 +17,9 @@ import javax.validation.constraints.*;
 public class CreditCard extends Account {
 
     @Embedded
-    private Money creditLimit = new Money(BigDecimal.valueOf(100));
+    private Money creditLimit;
 
-    @DecimalMin(value = "0.1")
-    private BigDecimal interestRate = BigDecimal.valueOf(0.2);
+    private BigDecimal interestRate;
 
     private LocalDate interestRateDateApplied;
 
@@ -29,6 +28,20 @@ public class CreditCard extends Account {
         super(primaryOwner, creationDate, secretKey, status);
         setCreditLimit(creditLimit);
         setInterestRate(interestRate);
+    }
+
+    public CreditCard(AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status,
+                      BigDecimal interestRate) {
+        this(primaryOwner, creationDate, secretKey, status, new Money(BigDecimal.valueOf(100)), interestRate);
+    }
+
+    public CreditCard(AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status,
+                      Money creditLimit) {
+        this(primaryOwner, creationDate, secretKey, status, creditLimit, BigDecimal.valueOf(0.2));
+    }
+
+    public CreditCard(AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status) {
+        this(primaryOwner, creationDate, secretKey, status, new Money(BigDecimal.valueOf(100)), BigDecimal.valueOf(0.2));
     }
 
     public void setCreditLimit(Money creditLimit) {

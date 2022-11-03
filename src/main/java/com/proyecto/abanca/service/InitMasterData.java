@@ -111,12 +111,12 @@ public class InitMasterData {
         studentCheckingRepository.save(studentChecking1);
         studentCheckingRepository.save(studentChecking2);
 
-        Savings savings1 = new Savings(accHolder3, LocalDate.of(2010, 1, 1), new Money(BigDecimal.valueOf(1000)), BigDecimal.valueOf(0.2));
-        Savings savings2 = new Savings(accHolder2, LocalDate.of(2012, 1, 6), new Money(BigDecimal.valueOf(10000)), BigDecimal.valueOf(0.5));
+        Savings savings1 = new Savings(accHolder3, LocalDate.of(2010, 1, 1));
+        Savings savings2 = new Savings(accHolder2, LocalDate.of(2012, 1, 6), new Money(BigDecimal.valueOf(5000)));
         savingsRepository.save(savings1);
         savingsRepository.save(savings2);
 
-        CreditCard creditCard1 = new CreditCard(accHolder1, LocalDate.of(2015, 3, 15), "1234", Status.ACTIVE, new Money(BigDecimal.valueOf(10000)), BigDecimal.valueOf(0.7));
+        CreditCard creditCard1 = new CreditCard(accHolder1, LocalDate.of(2015, 3, 15), "1234", Status.ACTIVE);
         CreditCard creditCard2 = new CreditCard(accHolder5, LocalDate.of(2012, 6, 6), "1234", Status.FROZEN, new Money(BigDecimal.valueOf(50000)), BigDecimal.valueOf(0.1));
         creditCardRepository.save(creditCard1);
         creditCardRepository.save(creditCard2);

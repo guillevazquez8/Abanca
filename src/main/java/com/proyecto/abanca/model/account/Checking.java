@@ -16,26 +16,26 @@ public class Checking extends Account {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="amount", column = @Column(name="amountMinimumBalance", insertable = false, updatable = false)),
-            @AttributeOverride(name="currency", column = @Column(name="currencyMinimumBalance", insertable = false, updatable = false)),
+            @AttributeOverride(name="amount", column = @Column(name="amountMinimumBalance")),
+            @AttributeOverride(name="currency", column = @Column(name="currencyMinimumBalance")),
     })
     private Money minimumBalance;
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="amount", column = @Column(name="monthlyMaintenanceFee", insertable = false, updatable = false)),
-            @AttributeOverride(name="currency", column = @Column(name="currencyMaintenanceFee", insertable = false, updatable = false)),
+            @AttributeOverride(name="amount", column = @Column(name="monthlyMaintenanceFee")),
+            @AttributeOverride(name="currency", column = @Column(name="currencyMaintenanceFee")),
     })
     private Money monthlyMaintenanceFee;
 
-    public Checking(AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status) {
+    public Checking(AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status, Money minimumBalance, Money monthlyMaintenanceFee) {
         super(primaryOwner, creationDate, secretKey, status);
+        this.minimumBalance = minimumBalance;
+        this.monthlyMaintenanceFee = monthlyMaintenanceFee;
     }
 
-    public Checking(AccountHolders primaryOwner, LocalDate creationDate, String secretKey) {
-        super(primaryOwner, creationDate, secretKey);
-        this.minimumBalance = new Money(BigDecimal.valueOf(250));
-        this.monthlyMaintenanceFee = new Money(BigDecimal.valueOf(12));
+    public Checking(AccountHolders primaryOwner, LocalDate creationDate, String secretKey, Status status) {
+        this(primaryOwner, creationDate, secretKey, status, new Money(BigDecimal.valueOf(250)), new Money(BigDecimal.valueOf(12)));
     }
 
 }

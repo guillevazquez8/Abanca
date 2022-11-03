@@ -26,8 +26,8 @@ public abstract class BasicAccount {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="amount", column = @Column(name="amountBalance", insertable = false, updatable = false)),
-            @AttributeOverride(name="currency", column = @Column(name="currencyBalance", insertable = false, updatable = false)),
+            @AttributeOverride(name="amount", column = @Column(name="amountBalance")),
+            @AttributeOverride(name="currency", column = @Column(name="currencyBalance"))
     })
     private Money balance;
 
@@ -40,10 +40,10 @@ public abstract class BasicAccount {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="amount", column = @Column(name="amountPenaltyFee", insertable = false, updatable = false)),
-            @AttributeOverride(name="currency", column = @Column(name="currencyPenaltyFee", insertable = false, updatable = false)),
+            @AttributeOverride(name="amount", column = @Column(name="amountPenaltyFee")),
+            @AttributeOverride(name="currency", column = @Column(name="currencyPenaltyFee")),
     })
-    private final Money penaltyFee = new Money(BigDecimal.valueOf(40));
+    private Money penaltyFee;
 
     private LocalDate creationDate;
 
@@ -53,8 +53,23 @@ public abstract class BasicAccount {
     @OneToMany(mappedBy = "accountDestino")
     private Set<Transfer> transfersReceived = new HashSet<>();
 
-    public BasicAccount(AccountHolders primaryOwner, LocalDate creationDate) {
+    public BasicAccount(Money balance, AccountHolders primaryOwner, Money penaltyFee, LocalDate creationDate) {
+        this.balance = balance;
         this.primaryOwner = primaryOwner;
+        this.penaltyFee = penaltyFee;
         this.creationDate = creationDate;
     }
+
+    public BasicAccount(AccountHolders primaryOwner, Money penaltyFee, LocalDate creationDate) {
+        this(new Money(BigDecimal.valueOf(0)), primaryOwner, penaltyFee, creationDate);
+    }
+
+    public BasicAccount(Money balance, AccountHolders primaryOwner, LocalDate creationDate) {
+        this(balance, primaryOwner, new Money(BigDecimal.valueOf(40)), creationDate);
+    }
+
+    public BasicAccount(AccountHolders primaryOwner, LocalDate creationDate) {
+        this(new Money(BigDecimal.valueOf(0)), primaryOwner, new Money(BigDecimal.valueOf(40)), creationDate);
+    }
+
 }

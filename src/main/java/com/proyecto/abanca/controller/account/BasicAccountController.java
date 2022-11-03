@@ -39,8 +39,8 @@ public class BasicAccountController {
 
     @PatchMapping("/any-account/{accountId}/{balance}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Money updateAnyBalance(@PathVariable Long accountId,
-                                  @PathVariable Long balance) {
+    public BasicAccount updateAnyBalance(@PathVariable Long accountId,
+                                         @PathVariable Long balance) {
         return basicAccountService.modifyAnyAccountBalance(accountId, balance);
     }
 

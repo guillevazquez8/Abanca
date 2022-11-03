@@ -42,10 +42,10 @@ public class BasicAccountService {
         return accountExists(accountId).getBalance();
     }
 
-    public Money modifyAnyAccountBalance(Long accountId, Long newBalance) {
+    public BasicAccount modifyAnyAccountBalance(Long accountId, Long newBalance) {
         BasicAccount account = accountExists(accountId);
         account.setBalance(new Money(BigDecimal.valueOf(newBalance)));
-        return account.getBalance();
+        return basicAccountRepository.save(account);
     }
 
     public void deductAmountTransfer(Long amount, Long accountId) throws NoFundsException {

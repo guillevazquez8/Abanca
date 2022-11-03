@@ -17,9 +17,9 @@ import javax.validation.constraints.*;
 public class Savings extends BasicAccount {
 
     @Embedded
-    private Money minimumBalance = new Money(BigDecimal.valueOf(1000));
+    private Money minimumBalance;
 
-    private BigDecimal interestRate = BigDecimal.valueOf(0.0025);
+    private BigDecimal interestRate;
 
     private LocalDate interestRateDateApplied;
 
@@ -27,6 +27,18 @@ public class Savings extends BasicAccount {
         super(primaryOwner, creationDate);
         setMinimumBalance(minimumBalance);
         setInterestRate(interestRate);
+    }
+
+    public Savings(AccountHolders primaryOwner, LocalDate creationDate, Money minimumBalance) {
+        this(primaryOwner, creationDate, minimumBalance, BigDecimal.valueOf(0.0025));
+    }
+
+    public Savings(AccountHolders primaryOwner, LocalDate creationDate, BigDecimal interestRate) {
+        this(primaryOwner, creationDate, new Money(BigDecimal.valueOf(1000)), interestRate);
+    }
+
+    public Savings(AccountHolders primaryOwner, LocalDate creationDate) {
+        this(primaryOwner, creationDate, new Money(BigDecimal.valueOf(1000)), BigDecimal.valueOf(0.0025));
     }
 
     public void setMinimumBalance(Money minimumBalance) {
