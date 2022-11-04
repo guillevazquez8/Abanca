@@ -1,10 +1,12 @@
 package com.proyecto.abanca;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.proyecto.abanca.dto.AccountDto;
-import com.proyecto.abanca.model.user.*;
-import com.proyecto.abanca.repositories.account.CheckingRepository;
-import com.proyecto.abanca.repositories.account.StudentCheckingRepository;
+import com.proyecto.abanca.dto.CreditCardDto;
+import com.proyecto.abanca.model.user.AccountHolders;
+import com.proyecto.abanca.model.user.Address;
+import com.proyecto.abanca.model.user.ERole;
+import com.proyecto.abanca.model.user.Role;
+import com.proyecto.abanca.repositories.account.CreditCardRepository;
 import com.proyecto.abanca.repositories.user.AccountHoldersRepository;
 import com.proyecto.abanca.repositories.user.AddressRepository;
 import com.proyecto.abanca.repositories.user.RoleRepository;
@@ -21,18 +23,19 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
 @SpringBootTest
-public class CheckingControllerTest {
+public class CreditCardControllerTest {
+
 
     @Autowired
     private AddressRepository addressRepository;
@@ -41,9 +44,7 @@ public class CheckingControllerTest {
     @Autowired
     private AccountHoldersRepository accountHoldersRepository;
     @Autowired
-    private CheckingRepository checkingRepository;
-    @Autowired
-    private StudentCheckingRepository studentCheckingRepository;
+    private CreditCardRepository creditCardRepository;
     @Autowired
     private WebApplicationContext webApplicationContext;
     @Autowired
@@ -69,14 +70,13 @@ public class CheckingControllerTest {
         Set<Role> roles = new HashSet<>();
 
         roles.add(accHolder);
-        AccountHolders juan = new AccountHolders("Juan", "juanuser", "soyjuan", roles, LocalDate.of(1996, 1, 15), juanAddress);
-        AccountHolders pablo = new AccountHolders("Pablo", "pablouser", "soypablo", roles, LocalDate.of(2001, 1, 15), juanAddress);
+        AccountHolders juan = new AccountHolders("Juan", "juanuser", "soyjuan", roles, LocalDate.of(1998, 1, 15), juanAddress);
         accountHoldersRepository.save(juan);
     }
+
     @AfterEach
     void tearDown() {
-        checkingRepository.deleteAll();
-        studentCheckingRepository.deleteAll();
+        creditCardRepository.deleteAll();
         accountHoldersRepository.deleteAll();
         addressRepository.deleteAll();
         roleRepository.deleteAll();
@@ -84,19 +84,19 @@ public class CheckingControllerTest {
 
     @Test
     @WithMockUser(username = "fakeUser", roles = {"ADMIN"})
-    void testCreateChecking() throws Exception {
+    void testCreateCreditCard() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                    .post("/abanca/checking")
-                    .content(objectMapper.writeValueAsString(new AccountDto("1", "1234")))
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .accept(MediaType.APPLICATION_JSON))
+                        .post("/abanca/creditcard")
+                        .content(objectMapper.writeValueAsString(new CreditCardDto("1", "1234", 52000L, 0.2)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(
                         status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.balance").exists());
-        var checkings = checkingRepository.findAll();
-        assertEquals(1, checkings.size());
-        assertTrue(checkings.toString().contains("minimumBalance"));
+        var creditCards = creditCardRepository.findAll();
+        assertEquals(1, creditCards.size());
+        assertTrue(creditCards.toString().contains("52000"));
     }
 
 }

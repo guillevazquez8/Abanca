@@ -1,6 +1,6 @@
 package com.proyecto.abanca.controller.account;
 
-import com.proyecto.abanca.dto.CheckingDto;
+import com.proyecto.abanca.dto.AccountDto;
 import com.proyecto.abanca.exceptions.WrongAccountException;
 import com.proyecto.abanca.model.account.StudentChecking;
 import com.proyecto.abanca.service.account.StudentCheckingService;
@@ -25,7 +25,7 @@ public class StudentCheckingController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ACCOUNTHOLDER') or hasRole('ADMIN')")
-    public StudentChecking createStudentChecking(@RequestBody CheckingDto checkingDto) throws WrongAccountException {
-        return studentCheckingService.save(checkingDto);
+    public StudentChecking createStudentChecking(@RequestBody AccountDto accountDto) throws WrongAccountException {
+        return studentCheckingService.save(accountDto);
     }
 }

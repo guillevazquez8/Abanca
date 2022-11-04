@@ -2,7 +2,12 @@ package com.proyecto.abanca;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proyecto.abanca.dto.AccountDto;
-import com.proyecto.abanca.model.user.*;
+import com.proyecto.abanca.model.user.AccountHolders;
+import com.proyecto.abanca.model.user.Address;
+import com.proyecto.abanca.model.user.ERole;
+import com.proyecto.abanca.model.user.Role;
+import com.proyecto.abanca.repositories.account.AccountRepository;
+import com.proyecto.abanca.repositories.account.BasicAccountRepository;
 import com.proyecto.abanca.repositories.account.CheckingRepository;
 import com.proyecto.abanca.repositories.account.StudentCheckingRepository;
 import com.proyecto.abanca.repositories.user.AccountHoldersRepository;
@@ -21,18 +26,18 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
 @SpringBootTest
-public class CheckingControllerTest {
+public class StudentCheckingControllerTest {
 
     @Autowired
     private AddressRepository addressRepository;
@@ -69,8 +74,7 @@ public class CheckingControllerTest {
         Set<Role> roles = new HashSet<>();
 
         roles.add(accHolder);
-        AccountHolders juan = new AccountHolders("Juan", "juanuser", "soyjuan", roles, LocalDate.of(1996, 1, 15), juanAddress);
-        AccountHolders pablo = new AccountHolders("Pablo", "pablouser", "soypablo", roles, LocalDate.of(2001, 1, 15), juanAddress);
+        AccountHolders juan = new AccountHolders("Juan", "juanuser", "soyjuan", roles, LocalDate.of(1998, 1, 15), juanAddress);
         accountHoldersRepository.save(juan);
     }
     @AfterEach
@@ -86,10 +90,10 @@ public class CheckingControllerTest {
     @WithMockUser(username = "fakeUser", roles = {"ADMIN"})
     void testCreateChecking() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                    .post("/abanca/checking")
-                    .content(objectMapper.writeValueAsString(new AccountDto("1", "1234")))
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .accept(MediaType.APPLICATION_JSON))
+                        .post("/abanca/checking")
+                        .content(objectMapper.writeValueAsString(new AccountDto("1", "1234")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(
                         status().isCreated())

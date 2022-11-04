@@ -3,8 +3,7 @@ package com.proyecto.abanca.model.account;
 import com.proyecto.abanca.model.user.AccountHolders;
 import lombok.*;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
@@ -17,6 +16,10 @@ import javax.validation.constraints.*;
 public class CreditCard extends Account {
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="amount", column = @Column(name="amountCreditLimit")),
+            @AttributeOverride(name="currency", column = @Column(name="currencyCreditLimit")),
+    })
     private Money creditLimit;
 
     private BigDecimal interestRate;

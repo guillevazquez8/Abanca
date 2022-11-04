@@ -7,6 +7,7 @@ import com.proyecto.abanca.repositories.account.CreditCardRepository;
 import com.proyecto.abanca.repositories.account.SavingsRepository;
 import com.proyecto.abanca.repositories.account.StudentCheckingRepository;
 import com.proyecto.abanca.repositories.user.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -26,12 +27,13 @@ public class InitMasterData {
     private StudentCheckingRepository studentCheckingRepository;
     private SavingsRepository savingsRepository;
     private CreditCardRepository creditCardRepository;
+    private PasswordEncoder encoder;
 
     public InitMasterData(AccountHoldersRepository accountHoldersRepository, RoleRepository roleRepository,
                           AddressRepository addressRepository, ThirdPartyRepository thirdPartyRepository,
                           AdminsRepository adminsRepository, CheckingRepository checkingRepository,
                           StudentCheckingRepository studentCheckingRepository, SavingsRepository savingsRepository,
-                          CreditCardRepository creditCardRepository) {
+                          CreditCardRepository creditCardRepository, PasswordEncoder encoder) {
         this.accountHoldersRepository = accountHoldersRepository;
         this.roleRepository = roleRepository;
         this.addressRepository = addressRepository;
@@ -41,6 +43,7 @@ public class InitMasterData {
         this.studentCheckingRepository = studentCheckingRepository;
         this.savingsRepository = savingsRepository;
         this.creditCardRepository = creditCardRepository;
+        this.encoder = encoder;
     }
 
     public void initData() {
@@ -71,11 +74,11 @@ public class InitMasterData {
         Set<Role> roles = new HashSet<>();
 
         roles.add(accountHolder);
-        AccountHolders accHolder1 = new AccountHolders("Valeri Karpin", "valeri", "soyvaleri", roles, LocalDate.of(1985,9,28), address1);
-        AccountHolders accHolder2 = new AccountHolders("Gustavo Lopez", "gustavo", "soygustavo", roles, LocalDate.of(1982,2,12), address2);
-        AccountHolders accHolder3 = new AccountHolders("Benni McCarthy", "benni", "soybenni", roles, LocalDate.of(1993,03,03), address3);
-        AccountHolders accHolder4 = new AccountHolders("Michel Salgado", "michel", "soymichel", roles, LocalDate.of(1999, 11, 6), address3);
-        AccountHolders accHolder5 = new AccountHolders("Mazinho Alcantara", "mazinho", "soymazinho", roles, LocalDate.of(2001, 3, 3), address1);
+        AccountHolders accHolder1 = new AccountHolders("Valeri Karpin", "valeri", encoder.encode("soyvaleri"), roles, LocalDate.of(1985,9,28), address1);
+        AccountHolders accHolder2 = new AccountHolders("Gustavo Lopez", "gustavo", encoder.encode("soygustavo"), roles, LocalDate.of(1982,2,12), address2);
+        AccountHolders accHolder3 = new AccountHolders("Benni McCarthy", "benni", encoder.encode("soybenni"), roles, LocalDate.of(1993,03,03), address3);
+        AccountHolders accHolder4 = new AccountHolders("Michel Salgado", "michel", encoder.encode("soymichel"), roles, LocalDate.of(1999, 11, 6), address3);
+        AccountHolders accHolder5 = new AccountHolders("Mazinho Alcantara", "mazinho", encoder.encode("soymazinho"), roles, LocalDate.of(2001, 3, 3), address1);
         accountHoldersRepository.save(accHolder1);
         accountHoldersRepository.save(accHolder2);
         accountHoldersRepository.save(accHolder3);
@@ -84,18 +87,18 @@ public class InitMasterData {
         roles.clear();
 
         roles.add(thirdParty);
-        ThirdParty thirdParty1 = new ThirdParty("Leo Messi", "leo", "soyleo", roles, "1234");
-        ThirdParty thirdParty2 = new ThirdParty("Andres Iniesta", "andres", "soyandres", roles, "1234");
-        ThirdParty thirdParty3 = new ThirdParty("Samuel Etoo", "samuel", "soysamuel", roles, "1234");
+        ThirdParty thirdParty1 = new ThirdParty("Leo Messi", "leo", encoder.encode("soyleo"), roles, "1234");
+        ThirdParty thirdParty2 = new ThirdParty("Andres Iniesta", "andres", encoder.encode("soyandres"), roles, "1234");
+        ThirdParty thirdParty3 = new ThirdParty("Samuel Etoo", "samuel", encoder.encode("soysamuel"), roles, "1234");
         thirdPartyRepository.save(thirdParty1);
         thirdPartyRepository.save(thirdParty2);
         thirdPartyRepository.save(thirdParty3);
         roles.clear();
 
         roles.add(admin);
-        Admins admin1 = new Admins("Paolo Maldini", "paolo", "soypaolo", roles);
-        Admins admin2 = new Admins("Andrei Shevchenko", "andrei", "soyandrei", roles);
-        Admins admin3 = new Admins("Andrea Pirlo", "andrea", "soyandrea", roles);
+        Admins admin1 = new Admins("Paolo Maldini", "paolo", encoder.encode("soypaolo"), roles);
+        Admins admin2 = new Admins("Andrei Shevchenko", "andrei", encoder.encode("soyandrei"), roles);
+        Admins admin3 = new Admins("Andrea Pirlo", "andrea", encoder.encode("soyandrea"), roles);
         adminsRepository.save(admin1);
         adminsRepository.save(admin2);
         adminsRepository.save(admin3);

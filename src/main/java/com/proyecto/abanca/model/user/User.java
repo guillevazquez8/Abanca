@@ -2,6 +2,7 @@ package com.proyecto.abanca.model.user;
 
 import com.proyecto.abanca.model.account.Transfer;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,7 +12,6 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @Getter
-@Setter
 @ToString
 @Inheritance(strategy=InheritanceType.JOINED)
 public class User {
@@ -50,8 +50,16 @@ public class User {
         this.username = username;
         this.password = password;
     }
-    public String getUsername() {
-        return this.username;
+
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }

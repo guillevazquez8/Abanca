@@ -37,6 +37,8 @@ public class CreditCardService {
         creditCard.setCreationDate(LocalDate.now());
         creditCard.setSecretKey(creditCardDto.getSecretKey());
         creditCard.setStatus(Status.ACTIVE);
+        creditCard.setCreditLimit(new Money(BigDecimal.valueOf(creditCardDto.getCreditLimit())));
+        creditCard.setInterestRate(BigDecimal.valueOf(creditCardDto.getInterestRate()));
 
         return creditCardRepository.save(creditCard);
     }

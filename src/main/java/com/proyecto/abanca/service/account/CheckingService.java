@@ -5,7 +5,7 @@ import com.proyecto.abanca.exceptions.WrongAccountException;
 import com.proyecto.abanca.model.account.Checking;
 import com.proyecto.abanca.model.account.Money;
 import com.proyecto.abanca.model.account.Status;
-import com.proyecto.abanca.dto.CheckingDto;
+import com.proyecto.abanca.dto.AccountDto;
 import com.proyecto.abanca.model.user.AccountHolders;
 import com.proyecto.abanca.repositories.account.CheckingRepository;
 import com.proyecto.abanca.service.user.AccountHoldersService;
@@ -41,17 +41,17 @@ public class CheckingService {
         return checkingRepository.findById(id).get();
     }
 
-    public Checking save(CheckingDto checkingDto) throws WrongAccountException {
-        AccountHolders primaryOwner = accountHoldersService.findById(Long.valueOf(checkingDto.getPrimaryOwnerId()));
+    public Checking save(AccountDto accountDto) throws WrongAccountException {
+        AccountHolders primaryOwner = accountHoldersService.findById(Long.valueOf(accountDto.getPrimaryOwnerId()));
         if (primaryOwner.getDateOfBirth().isAfter(LocalDate.of(LocalDate.now().getYear() - 24, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()))) {
-            studentCheckingService.save(checkingDto);
+            studentCheckingService.save(accountDto);
             throw new WrongAccountException("You're too young to have a Checking account! We'll create a Student Checking account instead");
         }
         Checking checking = new Checking();
-        checking.setBalance(new Money(BigDecimal.valueOf(checkingDto.getBalance())));
+        checking.setBalance(new Money(BigDecimal.valueOf(accountDto.getBalance())));
         checking.setPrimaryOwner(primaryOwner);
         checking.setCreationDate(LocalDate.now());
-        checking.setSecretKey(checkingDto.getSecretKey());
+        checking.setSecretKey(accountDto.getSecretKey());
         checking.setStatus(Status.ACTIVE);
 
         return checkingRepository.save(checking);

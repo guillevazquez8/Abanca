@@ -21,6 +21,7 @@ public class CreditCardDto {
     private Double interestRate;
 
     public CreditCardDto(String primaryOwnerId, String secretKey, Long creditLimit, Double interestRate) {
+        this.balance = 0L;
         this.primaryOwnerId = primaryOwnerId;
         this.secretKey = secretKey;
         this.creditLimit = creditLimit;
