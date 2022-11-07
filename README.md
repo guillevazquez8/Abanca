@@ -1,3 +1,4 @@
+![AbancaProject](https://user-images.githubusercontent.com/104373456/200312140-3271efc9-2ab8-4608-8280-fd043b81d971.png)
 As a final project of the bootcamp we had to develop a RESTful API of a bank system following some basic guidelines. It was an individual project, therefore we couldn't get help from teachers nor from other students, and we had two weeks to make it.
 
 The tech stack used for the project, and the one we've worked with during the bootcamp, is Java, MySQL for database management and Spring Boot for microservices creation. I've worked with good practices for easy readibility, coherence and understanding of the business logic. 
