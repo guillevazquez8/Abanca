@@ -42,22 +42,4 @@ public class SavingsService {
         return savingsRepository.save(savings);
     }
 
-    public void applyInterestRate(Long id) {
-        Optional<Savings> savingsOptional = savingsRepository.findById(id);
-        if (savingsOptional.isEmpty()) {
-            throw new BadRequestException("The introduced savings account ID doesn't belong to any account");
-        }
-        Savings savings = savingsOptional.get();
-
-        if (savings.getInterestRateDateApplied().equals(null)) {
-            if (LocalDate.now().isAfter(LocalDate.of(savings.getCreationDate().getYear() + 1, savings.getCreationDate().getMonth(), savings.getCreationDate().getDayOfMonth()))) {
-                savings.setBalance(new Money(savings.getBalance().getAmount().add(savings.getBalance().getAmount().multiply(savings.getInterestRate()))));
-                savings.setInterestRateDateApplied(LocalDate.now());
-            }
-        } else if (LocalDate.now().isAfter(LocalDate.of(savings.getInterestRateDateApplied().getYear() + 1, savings.getInterestRateDateApplied().getMonth(), savings.getInterestRateDateApplied().getDayOfMonth()))) {
-            savings.setBalance(new Money(savings.getBalance().getAmount().add(savings.getBalance().getAmount().multiply(savings.getInterestRate()))));
-            savings.setInterestRateDateApplied(LocalDate.now());
-        }
-    }
-
 }

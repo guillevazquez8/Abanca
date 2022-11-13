@@ -54,10 +54,12 @@ public abstract class BasicAccount {
         this.creationDate = creationDate;
     }
 
+    //constructor overload to set balance value to 0 when creating an account
     public BasicAccount(AccountHolders primaryOwner, Money penaltyFee, LocalDate creationDate) {
         this(new Money(BigDecimal.valueOf(0)), primaryOwner, penaltyFee, creationDate);
     }
 
+    //constructor overload to set penalty fee value to 40 when creating an account
     public BasicAccount(Money balance, AccountHolders primaryOwner, LocalDate creationDate) {
         this(balance, primaryOwner, new Money(BigDecimal.valueOf(40)), creationDate);
     }

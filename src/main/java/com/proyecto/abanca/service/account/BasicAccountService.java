@@ -64,6 +64,7 @@ public class BasicAccountService {
         accountOrigen.setBalance(newBalance);
     }
 
+    //method to apply penalty fee, 40 USD, if the balance gets lower than the minimum balance
     public void penaltyFee(Long amount, Long accountId) {
         if (checkingService.findByIdOptional(accountId).isPresent()) {
             Checking checking = checkingService.findByIdOptional(accountId).get();
@@ -82,10 +83,11 @@ public class BasicAccountService {
         }
     }
 
+    //method to apply interest rate one year after creating the account, and every year after the interest rate was applied
     public void applyInterestRate(Long accountId) {
         if (savingsService.findByIdOptional(accountId).isPresent()) {
             Savings savings = savingsService.findById(accountId);
-            if (savings.getInterestRateDateApplied().equals(null)) {
+            if (savings.getInterestRateDateApplied().equals(null)) { //if interest rate hasnt been applied yet
                 if (LocalDate.now().isAfter(LocalDate.of(savings.getCreationDate().getYear() + 1, savings.getCreationDate().getMonth(), savings.getCreationDate().getDayOfMonth()))) {
                     savings.setBalance(new Money(savings.getBalance().getAmount().add(savings.getBalance().getAmount().multiply(savings.getInterestRate()))));
                     savings.setInterestRateDateApplied(LocalDate.now());

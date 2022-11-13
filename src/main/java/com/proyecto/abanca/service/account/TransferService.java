@@ -40,6 +40,7 @@ public class TransferService {
         return transfer;
     }
 
+    //specific transfer method for Third Party users, as they dont have an account they need to introduce a hashed key
     public Transfer transferThirdParty(TransferThirdPartyDto transferThirdPartyDto) throws NoFundsException {
         accountService.secretKeyCorrespondsId(Long.valueOf(transferThirdPartyDto.getAccountOrigenId()), transferThirdPartyDto.getAccountDestinoSecretKey());
         accountService.secretKeyCorrespondsId(Long.valueOf(transferThirdPartyDto.getAccountDestinoId()), transferThirdPartyDto.getAccountDestinoSecretKey());
