@@ -11,6 +11,6 @@ For the development of the program I've followed the next order:
 3. After that, I've created the repositories with the necessary queries.
 4. Later, I've developed the services with the business logic. I've included methods for creating the different accounts, and a transfer funciton which included the deduction and deposit method in the respective accounts. Other methods are included, such as the penalty fee and the interest rate method. 
 5. At last I've made the controllers, which included several endpoints for the methods developed before. These endpoints were tested with a Postman collection. 
-6. I've included an exception handler at API level, which throws errors 400, 401, 403, 404 and 500. I've also included spring security with JWT and roles, for authentication and authorization, and several integration tests to test the key methods of the controllers.
+6. I've included an exception handler at API level, which throws HTTP errors 400, 401, 403, 404 and 500. I've also included spring security with JWT and roles, for authentication and authorization, and several integration tests of the key methods of the controllers.
 
 ![AbancaProject](https://user-images.githubusercontent.com/104373456/200312489-3fc3ad20-8869-41c3-b312-98eed1be1acc.png)
