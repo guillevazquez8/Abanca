@@ -57,5 +57,9 @@ public class CheckingService {
         return checkingRepository.save(checking);
     }
 
+    public Checking saveChecking(Checking checking) {
+        return checkingRepository.save(checking);
+    }
+
 
 }

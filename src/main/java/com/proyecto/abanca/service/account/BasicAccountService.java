@@ -55,6 +55,7 @@ public class BasicAccountService {
         }
         Money newBalance = new Money(accountOrigen.getBalance().getAmount().subtract(BigDecimal.valueOf(amount)));
         accountOrigen.setBalance(newBalance);
+        basicAccountRepository.save(accountOrigen);
         penaltyFee(amount, accountId);
     }
 
@@ -71,6 +72,7 @@ public class BasicAccountService {
 
             if (checking.getBalance().getAmount().longValue() < checking.getMinimumBalance().getAmount().longValue()) {
                 checking.setBalance(new Money(checking.getBalance().getAmount().subtract(checking.getPenaltyFee().getAmount())));
+                checkingService.saveChecking(checking);
             }
         }
 
