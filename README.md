@@ -1,4 +1,4 @@
-**Abanca Project**
+# Abanca Project
 
 As a final project of the bootcamp we've had to develop a RESTful API of a bank system following some basic guidelines. It was an individual project, therefore we couldn't get help from teachers nor from other students, and we had two weeks to make it.
 
