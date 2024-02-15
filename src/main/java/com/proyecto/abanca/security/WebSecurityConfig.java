@@ -63,7 +63,7 @@ public class WebSecurityConfig {
                 .authorizeRequests().antMatchers("/abanca/auth/signup").permitAll()
                 .antMatchers("/abanca/auth/signin").permitAll()
                 .antMatchers("/abanca/initData").permitAll()
-                .antMatchers("/v2/api-docs",
+                .antMatchers("/v3/api-docs",
                         "/configuration/ui",
                         "/swagger-resources/**",
                         "/configuration/security",
