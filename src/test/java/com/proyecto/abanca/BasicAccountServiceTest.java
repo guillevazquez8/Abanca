@@ -77,14 +77,14 @@ public class BasicAccountServiceTest {
 
     @Test
     void testPenaltyFee() throws NoFundsException {
-        basicAccountService.deductAmountTransfer(1800L, 1L);
-        assertEquals(basicAccountService.findById(1L).getBalance().getAmount().longValue(), 160L);
+        basicAccountService.deductAmountTransfer(1800L, 2L);
+        assertEquals(basicAccountService.findById(2L).getBalance().getAmount().longValue(), 160L);
     }
 
     @Test
     void testNoFundsExcepion() {
         Assertions.assertThrows(NoFundsException.class, () ->
-        {basicAccountService.deductAmountTransfer(2500L, 1L);});
+        {basicAccountService.deductAmountTransfer(2500L, 3L);});
     }
 
 }

@@ -115,7 +115,7 @@ public class BasicAccountService {
     public BasicAccount accountExists(Long accountId) {
         Optional<BasicAccount> accountOptional = basicAccountRepository.findById(accountId);
         if (accountOptional.isEmpty()) {
-            throw new BadRequestException("The account introduced doesn't exist");
+            throw new BadRequestException("The account introduced doesn't exist. Current existing accounts ids are: " + basicAccountRepository.getAllIds());
         }
         return accountOptional.get();
     }

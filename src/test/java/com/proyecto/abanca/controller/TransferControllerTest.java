@@ -104,7 +104,7 @@ public class TransferControllerTest {
     void testTransfer() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/abanca/transfer")
-                        .content(objectMapper.writeValueAsString(new TransferDto(5000L, "1", "2", "Pablo")))
+                        .content(objectMapper.writeValueAsString(new TransferDto(5000L, "5", "6", "Pablo")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -113,7 +113,7 @@ public class TransferControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.amount").exists());
         var transfers = transferRepository.findAll();
         assertEquals(1, transfers.size());
-        assertEquals(checkingRepository.findById(2L).get().getBalance().getAmount().longValue(), 5000L);
+        assertEquals(checkingRepository.findById(6L).get().getBalance().getAmount().longValue(), 5000L);
     }
 
 }

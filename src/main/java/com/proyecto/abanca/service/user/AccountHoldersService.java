@@ -20,7 +20,7 @@ public class AccountHoldersService {
 
     public AccountHolders findById(Long id) {
         if (accountHoldersRepository.findById(id).isEmpty()) {
-            throw new BadRequestException("Entered account holder ID doesn't exist.");
+            throw new BadRequestException("Entered account holder ID doesn't exist. Current acount holders ids are: " + accountHoldersRepository.getAllIds());
         }
         return accountHoldersRepository.findById(id).get();
     }

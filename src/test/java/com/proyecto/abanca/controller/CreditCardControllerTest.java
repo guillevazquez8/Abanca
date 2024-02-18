@@ -87,7 +87,7 @@ public class CreditCardControllerTest {
     void testCreateCreditCard() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/abanca/creditcard")
-                        .content(objectMapper.writeValueAsString(new CreditCardDto("1", "1234", 52000L, 0.2)))
+                        .content(objectMapper.writeValueAsString(new CreditCardDto("4", "1234", 52000L, 0.2)))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
