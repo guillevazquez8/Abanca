@@ -26,6 +26,7 @@ When it establishes a proper connection, Hibernate itself will take care of crea
 You will surely have some problems because Java applications can be somewhat complex to configure if you don't have experience, don't worry. To interact with the API, once you get it working, you can find documentation at the url http://localhost:8080/swagger-ui/
 
 
+
 ## API design and development
 
 The API is organized in 4 layers: model (entities), repositories, services, and controllers. Apart from these layers, I've included a security folder, an exceptions folder, and testing. 
