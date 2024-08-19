@@ -1,5 +1,9 @@
 # Abanca Project
 
+This is a personal project designed to work like a bank. I contains endpoints to make transfers between existing accounts, and some rules that automatically apply for each type of account (interest rates, penalties for different conditions, etc.). It has a security system based in OAuth 2.0 (which works with JWT and a user role system), documentation (that you can acces on endpoint __/swagger-ui__), and an API exception handler.
+
+The tech stack used for the project is Java-Spring Boot, with MySQL as relational database. 
+
 
 ## Set-up instructions
 
@@ -24,7 +28,7 @@ You will surely have some problems because Java applications can be somewhat com
 
 ## API design and development
 
-The tech stack used for the project is Java-Spring Boot, with MySQL as relational database. The API is organized in 4 layers: model (entities), repositories, services, and controllers. Apart from these layers, I've included a security folder, an exceptions folder, and testing. 
+The API is organized in 4 layers: model (entities), repositories, services, and controllers. Apart from these layers, I've included a security folder, an exceptions folder, and testing. 
 
 For the development of the program I've followed the next steps:
 
