@@ -1,13 +1,12 @@
 # Abanca Project
 
-## Index
-* Set-up instructions
-* API design and development
 
 ## Set-up instructions
 
 1. To make it work, you need to have JDK in your computer. If you don't have it yet, you can download it in this link https://www.oracle.com/es/java/technologies/downloads/
+
 2. In Java applications, all the libraries needed for the API to work correctly are in the pom.xml file. You have to execute this file to download everything inside the API.
+   
 3. Finally, you also need to configure the database. In Java, this is done in the __application.properties__ file, inside __src/main/resources/__. There, you must change the __spring.datasource__ info with the database you want to use (in my case MySQL, it can be any relational database you want). For stablishing the connection with it, Spring Data JPA will help. It'll be downloaded when you execute the pom.xml file. Next, I paste 2 screenshots to help understand this process.
 
    In the 1st picture, that's what you see when you click in the dog symbol (Spring Data JPA, in my IDE it appears in the right side of the screen), and then in the plus symbol (up left), you need to click in DB connection.
@@ -21,6 +20,7 @@
 When it establishes a proper connection, Hibernate itself will take care of creating the database based on the application model.
 
 You will surely have some problems because Java applications can be somewhat complex to configure if you don't have experience, don't worry. To interact with the API, once you get it working, you can find documentation at the url http://localhost:8080/swagger-ui/
+
 
 ## API design and development
 
