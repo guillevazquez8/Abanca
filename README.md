@@ -5,6 +5,7 @@ This is a personal project designed to work like a bank. It contains endpoints t
 The tech stack used for the project is Java-Spring Boot, with MySQL as relational database. 
 
 
+
 ## Set-up instructions
 
 1. To make it work, you need to have JDK in your computer. If you don't have it yet, you can download it in this link https://www.oracle.com/es/java/technologies/downloads/
