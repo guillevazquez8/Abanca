@@ -9,6 +9,7 @@
 1. To make it work, you need to have JDK in your computer. If you don't have it yet, you can download it in this link https://www.oracle.com/es/java/technologies/downloads/
 2. In Java applications, all the libraries needed for the API to work correctly are in the pom.xml file. You have to execute this file to download everything inside the API.
 3. Finally, you also need to configure the database. In Java, this is done in the __application.properties__ file, inside __src/main/resources/__. There, you must change the __spring.datasource__ info with the database you want to use (in my case MySQL, it can be any relational database you want). For stablishing a connection with it, Spring Data JPA will help. It'll be downloaded when you execute the pom.xml file. Next, I paste 2 screenshots to help understand this process.
+
    In the 1st picture, that's what you see when you click in the dog symbol (in my IDE it appears in the right side of the screen), and then in the plus symbol (up left), you need to click in DB connection.
    ![pic 1](https://github.com/user-attachments/assets/7d4ac855-5443-464d-97a4-a683bf22522c)
 
